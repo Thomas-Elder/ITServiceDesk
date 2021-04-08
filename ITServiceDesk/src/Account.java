@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.objects.annotations.Constructor;
-
 public class Account {
     
     public String email;
