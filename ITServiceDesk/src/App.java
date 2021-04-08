@@ -3,6 +3,9 @@ import java.util.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        
+        Scanner sc = new Scanner(System.in);
+        
         System.out.println("Welcom to Cinco IT Service Desk!");
 
         char option = '0';
@@ -17,12 +20,12 @@ public class App {
             System.out.println("X - Exit");
 
             // Get input
-            Scanner sc = new Scanner(System.in);
-
             // TODO Wrap this to validate input
             option = sc.nextLine().toCharArray()[0];
             
             // TODO switch to handle option selection
-        }        
+        }
+        
+        sc.close();
     }
 }
