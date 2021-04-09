@@ -2,10 +2,26 @@
 import java.util.*;
 
 public class App {
+
+    // Create list for accounts
+    static ArrayList <Account> accountList;
+    static Scanner sc;
+
     public static void main(String[] args) throws Exception {
+       
+        init();
+        interactionLoop();
+        end();
         
-        // Create list for accounts
-        ArrayList <Account> accountList= new ArrayList<Account>(); 
+    }
+
+    /**
+     * Initialise required fields and hardcoded values
+     */
+    public static void init(){
+
+        // Initialise ArrayList for Accounts
+        accountList= new ArrayList<Account>();
 
         // Create hardcoded technician accounts
         accountList.add(new Technician("harry.style@cinco.com", "Harry Style", "8992 6321", "1234", 1));
@@ -17,8 +33,14 @@ public class App {
         // Create hardcoded test Staff Account
         accountList.add(new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234"));
 
-        Scanner sc = new Scanner(System.in);
-        
+        // Initialise Scanner for input
+        sc = new Scanner(System.in);
+    }
+
+    /**
+     * Main interaction loop
+     */
+    public static void interactionLoop(){
         System.out.println("Welcome to Cinco IT Service Desk!");
 
         char option = '0';
@@ -38,7 +60,12 @@ public class App {
             
             // TODO switch to handle option selection
         }
-        
+    }
+
+    /**
+     * Close any open resources.
+     */
+    public static void end(){
         sc.close();
     }
 }
