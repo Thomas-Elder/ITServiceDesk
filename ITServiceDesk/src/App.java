@@ -7,12 +7,15 @@ public class App {
         // Create list for accounts
         ArrayList <Account> accountList= new ArrayList<Account>(); 
 
-        // Create technician accounts
-        accountList.add(new Technician("harry.style@cinco.com.au", "Harry Style", "8992 6321", "1234", 1));
-        accountList.add(new Technician("niall.horan@cinco.com.au", "Niall Horan", "8992 6322", "5678", 1));
-        accountList.add(new Technician("liam.payne@cinco.com.au", "Liam Payne", "8992 6323", "9123", 1));
-        accountList.add(new Technician("louis.tomlinson@cinco.com.au", "Louis Tomlinson", "8992 6324", "4567", 2));
-        accountList.add(new Technician("zayn.malik@cinco.com.au", "Zayn Malik", "8992 6325", "8912", 2));
+        // Create hardcoded technician accounts
+        accountList.add(new Technician("harry.style@cinco.com", "Harry Style", "8992 6321", "1234", 1));
+        accountList.add(new Technician("niall.horan@cinco.com", "Niall Horan", "8992 6322", "5678", 1));
+        accountList.add(new Technician("liam.payne@cinco.com", "Liam Payne", "8992 6323", "9123", 1));
+        accountList.add(new Technician("louis.tomlinson@cinco.com", "Louis Tomlinson", "8992 6324", "4567", 2));
+        accountList.add(new Technician("zayn.malik@cinco.com", "Zayn Malik", "8992 6325", "8912", 2));
+
+        // Create hardcoded test Staff Account
+        accountList.add(new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234"));
 
         Scanner sc = new Scanner(System.in);
         
