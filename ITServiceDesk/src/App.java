@@ -8,11 +8,11 @@ public class App {
         ArrayList <Account> accountList= new ArrayList<Account>(); 
 
         // Create technician accounts
-        accountList.add(new Technician("", "Harry Style", "", "", 1));
-        accountList.add(new Technician("", "Niall Horan", "", "", 1));
-        accountList.add(new Technician("", "Liam Payne", "", "", 1));
-        accountList.add(new Technician("", "Louis Tomlinson", "", "", 2));
-        accountList.add(new Technician("", "Zayn Malik", "", "", 2));
+        accountList.add(new Technician("harry.style@cinco.com.au", "Harry Style", "", "", 1));
+        accountList.add(new Technician("niall.horan@cinco.com.au", "Niall Horan", "", "", 1));
+        accountList.add(new Technician("liam.payne@cinco.com.au", "Liam Payne", "", "", 1));
+        accountList.add(new Technician("louis.tomlinson@cinco.com.au", "Louis Tomlinson", "", "", 2));
+        accountList.add(new Technician("zayn.malik@cinco.com.au", "Zayn Malik", "", "", 2));
 
         Scanner sc = new Scanner(System.in);
         
