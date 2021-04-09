@@ -59,6 +59,19 @@ public class App {
             option = sc.nextLine().toCharArray()[0];
             
             // TODO switch to handle option selection
+            switch (option){
+                case '1':
+                    break;
+                case '2':
+                    System.out.println("Please enter your email address:");
+                    break;
+                case '3':
+                    break;
+                case 'X':
+                    break;
+                default:
+                    System.out.println("Please select a valid option.");
+            }
         }
     }
 
