@@ -11,6 +11,7 @@ public class App {
     static Scanner sc;
     static Database db;
     static Boolean loggedIn;
+    static Account user;
 
     /**
      * <h2>Main</h2>
@@ -106,22 +107,49 @@ public class App {
             // If the user is loggedIn, create/view Tickets.
             } else {
 
-                System.out.println();
-                System.out.println("Please select an option:");
-                System.out.println("1 - Create a Ticket");
-                System.out.println("X - Exit");
+                // If the user is Technician... 
+                if (user.technician){
 
-                // Get input
-                option = sc.nextLine().toCharArray()[0];
+                    // Print Technician action options
+                    System.out.println();
+                    System.out.println("Please select an option:");
+                    System.out.println("1 - View Ticket list");
+                    System.out.println("X - Exit");
 
-                switch (option){
-                    case '1':
-                        createTicket();
-                        break;
-                    case 'X':
-                        break;
-                    default:
-                        System.out.println("Please select a valid option.");
+                    // Get input
+                    option = sc.nextLine().toCharArray()[0];
+
+                    switch (option){
+                        case '1':
+                            // List tickets for this Technician
+                            break;
+                        case 'X':
+                            break;
+                        default:
+                            System.out.println("Please select a valid option.");
+                    }
+
+                // Else it's a Staff Account
+                } else {
+
+                    // Print Staff action options
+                    System.out.println();
+                    System.out.println("Please select an option:");
+                    System.out.println("1 - Create a Ticket");
+                    System.out.println("X - Exit");
+
+                    // Get input
+                    option = sc.nextLine().toCharArray()[0];
+
+                    switch (option){
+                        case '1':
+                            createTicket();
+                            break;
+                        case 'X':
+                            break;
+                        default:
+                            System.out.println("Please select a valid option.");
+                    }
                 }
             }
         }
@@ -209,6 +237,7 @@ public class App {
             if (password.equals(account.password)) {
                 System.out.println("Success!");
                 loggedIn = true;
+                user = account;
             }
         }
     }
