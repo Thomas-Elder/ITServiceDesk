@@ -105,7 +105,9 @@ public class App {
 
         Account account = db.getAccount(emailResponse);
 
-        if (account != null) {
+        if (account == null) {
+            System.out.println("Email not found, please check the address and try again.");
+        } else {
             System.out.println("Please enter your password:");
             String password = sc.nextLine();
 
