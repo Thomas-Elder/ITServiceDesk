@@ -21,7 +21,19 @@ public class Ticket {
 		critical, high, medium, low;
 	}
 
-	Ticket(String description, Date creationDate, Status status, Technician assignedTechnician, Severity severity) {
+	public String description;
+	public Date creationDate;
+	public Status status;
+	public Technician assignedTechnician;
+	public Severity severity;
+	public ITSystem itsystem;
 
+	Ticket(String description, Date creationDate, Status status, Technician assignedTechnician, Severity severity, ITSystem itsystem) {
+		this.description = description;
+		this.creationDate = creationDate;
+		this.status = status;
+		this.assignedTechnician = assignedTechniciaion;
+		this.severity = severity;
+		this.itsystem = itsystem;
 	}
 }
