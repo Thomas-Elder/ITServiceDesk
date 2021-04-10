@@ -5,6 +5,7 @@ public class App {
 
     static Scanner sc;
     static Database db;
+    static Boolean loggedIn;
 
     public static void main(String[] args) throws Exception {
        
@@ -34,6 +35,9 @@ public class App {
 
         // Initialise Scanner for input
         sc = new Scanner(System.in);
+
+        // Initialise loggedIn to false
+        loggedIn = false;
     }
 
     /**
@@ -65,6 +69,7 @@ public class App {
                     logIn();
                     break;
                 case '3':
+                    createTicket();
                     break;
                 case 'X':
                     break;
@@ -93,7 +98,17 @@ public class App {
 
             if (password.equals(account.password)) {
                 System.out.println("Success!");
+                loggedIn = true;
             }
+        }
+    }
+
+    public static void createTicket(){
+
+        if (!loggedIn){
+            System.out.println("You must be logged in to create a ticket!");
+        } else {
+            System.out.println("You can create a ticket!");
         }
     }
 }
