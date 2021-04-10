@@ -49,34 +49,53 @@ public class App {
         char option = '0';
 
         while (option != 'X') {
-
-            // TODO print action options
-            System.out.println();
-            System.out.println("Please select an option:");
-            System.out.println("1 - Create an Account");
-            System.out.println("2 - Log in");
-            System.out.println("3 - Create a Ticket");
-            System.out.println("X - Exit");
-
-            // Get input
-            // TODO Wrap this to validate input
-            option = sc.nextLine().toCharArray()[0];
             
-            // TODO switch to handle option selection
-            switch (option){
-                case '1':
-                    createAccount();
-                    break;
-                case '2':
-                    logIn();
-                    break;
-                case '3':
-                    createTicket();
-                    break;
-                case 'X':
-                    break;
-                default:
-                    System.out.println("Please select a valid option.");
+            // If the user is not loggedIn, create/log in.
+            if (!loggedIn){
+
+                // Print action options
+                System.out.println();
+                System.out.println("Please select an option:");
+                System.out.println("1 - Create an Account");
+                System.out.println("2 - Log in");
+                System.out.println("X - Exit");
+
+                // Get input
+                option = sc.nextLine().toCharArray()[0];
+
+                switch (option){
+                    case '1':
+                        createAccount();
+                        break;
+                    case '2':
+                        logIn();
+                        break;
+                    case 'X':
+                        break;
+                    default:
+                        System.out.println("Please select a valid option.");
+                }
+
+            // If the user is loggedIn, create/view Tickets.
+            } else {
+
+                System.out.println();
+                System.out.println("Please select an option:");
+                System.out.println("1 - Create a Ticket");
+                System.out.println("X - Exit");
+
+                // Get input
+                option = sc.nextLine().toCharArray()[0];
+
+                switch (option){
+                    case '1':
+                        createTicket();
+                        break;
+                    case 'X':
+                        break;
+                    default:
+                        System.out.println("Please select a valid option.");
+                }
             }
         }
     }
