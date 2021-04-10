@@ -65,6 +65,7 @@ public class App {
             // TODO switch to handle option selection
             switch (option){
                 case '1':
+                    createAccount();
                     break;
                 case '2':
                     logIn();
@@ -85,6 +86,17 @@ public class App {
      */
     public static void end(){
         sc.close();
+    }
+
+    public static void createAccount(){
+        System.out.println("Please enter your email address:");
+        String emailResponse = sc.nextLine();
+
+        Account account = db.getAccount(emailResponse);
+
+        if (account != null) {
+            System.out.println("Email already in use. Please use a different address.");
+        }
     }
 
     public static void logIn(){
