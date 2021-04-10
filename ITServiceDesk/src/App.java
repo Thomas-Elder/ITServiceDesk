@@ -63,6 +63,19 @@ public class App {
                     break;
                 case '2':
                     System.out.println("Please enter your email address:");
+                    String emailResponse = sc.nextLine();
+
+                    Account account = db.getAccount(emailResponse);
+
+                    if (account != null) {
+                        System.out.println("Please enter your password:");
+                        String password = sc.nextLine();
+
+                        if (password.equals(account.password)) {
+                            System.out.println("Success!");
+                        }
+                    }
+
                     break;
                 case '3':
                     break;
