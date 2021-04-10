@@ -51,6 +51,7 @@ public class App {
         while (option != 'X') {
 
             // TODO print action options
+            System.out.println();
             System.out.println("Please select an option:");
             System.out.println("1 - Create an Account");
             System.out.println("2 - Log in");
