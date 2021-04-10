@@ -109,20 +109,37 @@ public class App {
 
     public static void createAccount(){
         System.out.println("Please enter your email address:");
-        String emailResponse = sc.nextLine();
+        String email = sc.nextLine();
 
-        Account account = db.getAccount(emailResponse);
+        Account account = db.getAccount(email);
 
+        // Check if the db contains an Account with this email address
         if (account != null) {
             System.out.println("Email already in use. Please use a different address.");
+
+        // Otherwise, continue with Account creation
+        } else {
+            String name, number, password;
+
+            System.out.println("Please enter your name:");
+            name = sc.nextLine();
+
+            System.out.println("Please enter your number:");
+            number = sc.nextLine();
+
+            System.out.println("Please enter your password:");
+            password = sc.nextLine();
+
+            // Add new Account to the db
+            db.addAccount(new Staff(email, name, number, password));
         }
     }
 
     public static void logIn(){
         System.out.println("Please enter your email address:");
-        String emailResponse = sc.nextLine();
+        String email = sc.nextLine();
 
-        Account account = db.getAccount(emailResponse);
+        Account account = db.getAccount(email);
 
         if (account == null) {
             System.out.println("Email not found, please check the address and try again.");
