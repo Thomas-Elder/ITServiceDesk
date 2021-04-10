@@ -1,12 +1,24 @@
 
 import java.util.*;
 
+/**
+ * <h1>Cinco IT Service Desk Application</h1>
+ * 
+ * A simple application for managing tickets for IT tasks.
+ */
 public class App {
 
     static Scanner sc;
     static Database db;
     static Boolean loggedIn;
 
+    /**
+     * <h2>Main</h2>
+     * This is the entry point for the application. 
+     * 
+     * @param not used
+     * @return none
+     */
     public static void main(String[] args) throws Exception {
        
         init();
@@ -16,7 +28,15 @@ public class App {
     }
 
     /**
-     * Initialise required fields and hardcoded values
+     * <h2>Init</h2>
+     * Initialise required fields and hardcoded values. 
+     * 
+     * Initialises the Database, then adds the hardcoded Accounts.
+     * Initialises the Scanner used for getting input from the user. 
+     * Initialises the loggedIn field, used for tracking if a user is logged in.
+     * 
+     * @param none
+     * @return none
      */
     public static void init(){
 
@@ -41,7 +61,14 @@ public class App {
     }
 
     /**
-     * Main interaction loop
+     * <h2>Interaction Loop</h2>
+     * Runs the main interaction loop.
+     * 
+     * Displays the options available to the user, based on whether they're logged in or not, 
+     * until they enter X to exit the application.
+     * 
+     * @param none
+     * @return none
      */
     public static void interactionLoop(){
         System.out.println("Welcome to Cinco IT Service Desk!");
@@ -101,12 +128,31 @@ public class App {
     }
 
     /**
-     * Close any open resources.
+     * <h2>End</h2>
+     * Clean up before ending execution. 
+     * 
+     * Closes any open resources, which at this point is just the Scanner.
+     * 
+     * @param none
+     * @return none
      */
     public static void end(){
         sc.close();
     }
 
+    /**
+     * <h2>Create Account</h2>
+     * Prompts user for details in order to create a new Account.
+     * 
+     * First prompts for the email address to use, and checks if this is already in the database. If
+     * it is, the function returns.
+     * 
+     * Otherwise, prompts for name, number and password, and uses the responses to create a new 
+     * Account and add it to the database.
+     * 
+     * @param none
+     * @return none
+     */
     public static void createAccount(){
         System.out.println("Please enter your email address:");
         String email = sc.nextLine();
@@ -135,6 +181,19 @@ public class App {
         }
     }
 
+    /**
+     * <h2>Log In</h2>
+     * Prompts the user for log in details.
+     * 
+     * First prompts for an email address, and checks if it is in the database. If it is not, 
+     * the function returns.
+     * 
+     * If it is in the database, the user is prompted for the password. If this matches the 
+     * value stored in the database, print Success and set loggedIn to true.
+     * 
+     * @param none
+     * @return none
+     */
     public static void logIn(){
         System.out.println("Please enter your email address:");
         String email = sc.nextLine();
@@ -154,6 +213,13 @@ public class App {
         }
     }
 
+    /**
+     * <h2>Create Ticket</h2>
+     * Prompts the user to enter details to create a new Ticket.
+     * 
+     * @param none
+     * @return none
+     */
     public static void createTicket(){
 
         if (!loggedIn){
