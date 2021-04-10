@@ -1,14 +1,19 @@
 import java.util.Dictionary;
+import java.util.HashMap;
 
 public class Database {
     
-    Dictionary<String, Account> dict = new Dictionary<String, Account>(); 
+    HashMap<String, Account> accountHashMap = new HashMap<String, Account>(); 
 
     Database(){
 
     }
 
-    public Account getAccount(String email){
+    public void addAccount(Account newAccount){
+        accountHashMap.put(newAccount.email, newAccount);
+    }
 
+    public Account getAccount(String email){
+        return accountHashMap.get(email);
     }
 }
