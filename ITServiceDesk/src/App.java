@@ -62,20 +62,7 @@ public class App {
                 case '1':
                     break;
                 case '2':
-                    System.out.println("Please enter your email address:");
-                    String emailResponse = sc.nextLine();
-
-                    Account account = db.getAccount(emailResponse);
-
-                    if (account != null) {
-                        System.out.println("Please enter your password:");
-                        String password = sc.nextLine();
-
-                        if (password.equals(account.password)) {
-                            System.out.println("Success!");
-                        }
-                    }
-
+                    logIn();
                     break;
                 case '3':
                     break;
@@ -92,5 +79,21 @@ public class App {
      */
     public static void end(){
         sc.close();
+    }
+
+    public static void logIn(){
+        System.out.println("Please enter your email address:");
+        String emailResponse = sc.nextLine();
+
+        Account account = db.getAccount(emailResponse);
+
+        if (account != null) {
+            System.out.println("Please enter your password:");
+            String password = sc.nextLine();
+
+            if (password.equals(account.password)) {
+                System.out.println("Success!");
+            }
+        }
     }
 }
