@@ -55,7 +55,8 @@ public class App {
 
 		// Create test Ticket for testing
 		ITSystem itSystem = new ITSystem("OS", "system", "program", "version", "description");
-		Ticket ticket = new Ticket("Test", new Date(), Ticket.Status.open, db.getTechnicianAccount("harry.style@cinco.com"), Ticket.Severity.low, itSystem);
+		Ticket ticket = new Ticket("Test", Ticket.Status.open, Ticket.Severity.low, itSystem);
+		ticket.assignedTechnician = db.getTechnicianAccount("harry.style@cinco.com");
 		db.addTicket(ticket);
 
 		// Initialise Scanner for input
