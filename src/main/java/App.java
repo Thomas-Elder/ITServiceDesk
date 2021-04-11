@@ -3,7 +3,6 @@ import java.util.*;
 
 /**
  * <h1>Cinco IT Service Desk Application</h1>
- * 
  * A simple application for managing tickets for IT tasks.
  */
 public class App {
@@ -14,7 +13,8 @@ public class App {
 	static Account user;	
 
 	/**
-	 * <h2>Main</h2> This is the entry point for the application.
+	 * <h2>Main</h2>
+	 * This is the entry point for the application.
 	 * 
 	 * @param not used
 	 * @return none
@@ -28,7 +28,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Init</h2> Initialise required fields and hardcoded values.
+	 * <h2>Init</h2>
+	 * Initialise required fields and hardcoded values.
 	 * 
 	 * Initialises the Database, then adds the hardcoded Accounts. Initialises the
 	 * Scanner used for getting input from the user. Initialises the loggedIn field,
@@ -65,7 +66,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Interaction Loop</h2> Runs the main interaction loop.
+	 * <h2>Interaction Loop</h2>
+	 * Runs the main interaction loop.
 	 * 
 	 * Displays the options available to the user, based on whether they're logged
 	 * in or not, until they enter X to exit the application.
@@ -166,7 +168,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>End</h2> Clean up before ending execution.
+	 * <h2>End</h2>
+	 * Clean up before ending execution.
 	 * 
 	 * Closes any open resources, which at this point is just the Scanner.
 	 * 
@@ -178,8 +181,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Create Account</h2> Prompts user for details in order to create a new
-	 * Account.
+	 * <h2>Create Account</h2>
+	 * Prompts user for details in order to create a new Account.
 	 * 
 	 * First prompts for the email address to use, and checks if this is already in
 	 * the database. If it is, the function returns.
@@ -219,7 +222,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Staff Log In</h2> Prompts the user for log in details.
+	 * <h2>Staff Log In</h2>
+	 * Prompts the user for log in details.
 	 * 
 	 * First prompts for an email address, and checks if it is in the database. If
 	 * it is not, the function returns.
@@ -252,7 +256,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Technician Log In</h2> Prompts the user for log in details.
+	 * <h2>Technician Log In</h2>
+	 * Prompts the user for log in details.
 	 * 
 	 * First prompts for an email address, and checks if it is in the database. If
 	 * it is not, the function returns.
@@ -285,8 +290,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Create Ticket</h2> Prompts the user to enter details to create a new
-	 * Ticket.
+	 * <h2>Create Ticket</h2> 
+	 * Prompts the user to enter details to create a new Ticket.
 	 * 
 	 * @param none
 	 * @return none
@@ -303,6 +308,9 @@ public class App {
 	/**
 	 * <h2>Print All Tickets</h2>
 	 * Prints a list of all tickets currently in the system.
+	 * 
+	 * @param none
+	 * @return none
 	 */
 	public static void printAllTickets(){
 		for (Ticket ticket : db.getTickets()) {
@@ -315,6 +323,13 @@ public class App {
 		}
 	}
 
+	/**
+	 * <h2>Print My Tickets</h2>
+	 * Print all the tickets for the specified Technician.
+	 * 
+	 * @param technician
+	 * @return none
+	 */
 	public static void printMyTickets(Technician technician){
 
 		List<Ticket> myTickets = db.getTickets(technician);
