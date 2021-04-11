@@ -131,7 +131,7 @@ public class App {
 						printAllTickets();
 						break;
 					case '2':
-						printMyTickets();
+						printMyTickets((Technician)user);
 						break;	
 					case 'X':
 						break;
@@ -315,7 +315,22 @@ public class App {
 		}
 	}
 
-	public static void printMyTickets(){
+	public static void printMyTickets(Technician technician){
 
+		List<Ticket> myTickets = db.getTickets(technician);
+
+		if (myTickets.size() == 0) {
+			System.out.println("You don't have any tickets at the moment!");
+		} else {
+
+			for (Ticket ticket : myTickets) {
+				System.out.println("Description: " + ticket.description);
+				System.out.println("Creation Date: " + ticket.creationDate);
+				System.out.println("Status: " + ticket.status);
+				System.out.println("Assigned Technician: " + ticket.assignedTechnician.name);
+				System.out.println("Severity: " + ticket.severity);
+				System.out.println("IT System OS: " + ticket.itsystem.OS);
+			}
+		}
 	}
 }
