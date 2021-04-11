@@ -32,7 +32,7 @@ public class Ticket {
 		this.description = description;
 		this.creationDate = creationDate;
 		this.status = status;
-		this.assignedTechnician = assignedTechniciaion;
+		this.assignedTechnician = assignedTechnician;
 		this.severity = severity;
 		this.itsystem = itsystem;
 	}

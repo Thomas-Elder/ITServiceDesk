@@ -5,7 +5,7 @@ public class ITSystem {
     public String version;
     public String description;
 
-    ITSystem(String OS, String system, Sting program, String version, String description) {
+    ITSystem(String OS, String system, String program, String version, String description) {
         this.OS = OS;
         this.system = system;
         this.program = program;
