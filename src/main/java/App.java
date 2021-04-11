@@ -43,14 +43,14 @@ public class App {
 		db = new Database();
 
 		// Create hardcoded technician accounts
-		db.addAccount(new Technician("harry.style@cinco.com", "Harry Style", "8992 6321", "1234", 1));
-		db.addAccount(new Technician("niall.horan@cinco.com", "Niall Horan", "8992 6322", "5678", 1));
-		db.addAccount(new Technician("liam.payne@cinco.com", "Liam Payne", "8992 6323", "9123", 1));
-		db.addAccount(new Technician("louis.tomlinson@cinco.com", "Louis Tomlinson", "8992 6324", "4567", 2));
-		db.addAccount(new Technician("zayn.malik@cinco.com", "Zayn Malik", "8992 6325", "8912", 2));
+		db.addTechnicianAccount(new Technician("harry.style@cinco.com", "Harry Style", "8992 6321", "1234", 1));
+		db.addTechnicianAccount(new Technician("niall.horan@cinco.com", "Niall Horan", "8992 6322", "5678", 1));
+		db.addTechnicianAccount(new Technician("liam.payne@cinco.com", "Liam Payne", "8992 6323", "9123", 1));
+		db.addTechnicianAccount(new Technician("louis.tomlinson@cinco.com", "Louis Tomlinson", "8992 6324", "4567", 2));
+		db.addTechnicianAccount(new Technician("zayn.malik@cinco.com", "Zayn Malik", "8992 6325", "8912", 2));
 
 		// Create hardcoded test Staff Account
-		db.addAccount(new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234"));
+		db.addStaffAccount(new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234"));
 
 		// Initialise Scanner for input
 		sc = new Scanner(System.in);
