@@ -52,6 +52,11 @@ public class App {
 		// Create hardcoded test Staff Account
 		db.addStaffAccount(new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234"));
 
+		// Create test Ticket for testing
+		ITSystem itSystem = new ITSystem("OS", "system", "program", "version", "description")
+		Ticket ticket = new Ticket("Test", new Date(), Ticket.Status.open, db.getTechnicianAccount("harry.style@cinco.com"), Ticket.Severity.low, itSystem);
+		db.addTicket(ticket);
+
 		// Initialise Scanner for input
 		sc = new Scanner(System.in);
 
@@ -90,7 +95,7 @@ public class App {
 
 				switch (option) {
 				case '1':
-					createAccount();
+					createStaffAccount();
 					break;
 				case '2':
 					logIn();
@@ -177,11 +182,11 @@ public class App {
 	 * @param none
 	 * @return none
 	 */
-	public static void createAccount() {
+	public static void createStaffAccount() {
 		System.out.println("Please enter your email address:");
 		String email = sc.nextLine();
 
-		Account account = db.getAccount(email);
+		Account account = db.getStaffAccount(email);
 
 		// Check if the db contains an Account with this email address
 		if (account != null) {
@@ -201,7 +206,7 @@ public class App {
 			password = sc.nextLine();
 
 			// Add new Account to the db
-			db.addAccount(new Staff(email, name, number, password));
+			db.addStaffAccount(new Staff(email, name, number, password));
 		}
 	}
 
