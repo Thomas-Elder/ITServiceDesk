@@ -211,7 +211,7 @@ public class App {
 	}
 
 	/**
-	 * <h2>Log In</h2> Prompts the user for log in details.
+	 * <h2>Staff Log In</h2> Prompts the user for log in details.
 	 * 
 	 * First prompts for an email address, and checks if it is in the database. If
 	 * it is not, the function returns.
@@ -228,6 +228,39 @@ public class App {
 		String email = sc.nextLine();
 
 		Account account = db.getStaffAccount(email);
+
+		if (account == null) {
+			System.out.println("Email not found, please check the address and try again.");
+		} else {
+			System.out.println("Please enter your password:");
+			String password = sc.nextLine();
+
+			if (password.equals(account.password)) {
+				System.out.println("Success!");
+				loggedIn = true;
+				user = account;
+			}
+		}
+	}
+
+	/**
+	 * <h2>Technician Log In</h2> Prompts the user for log in details.
+	 * 
+	 * First prompts for an email address, and checks if it is in the database. If
+	 * it is not, the function returns.
+	 * 
+	 * If it is in the database, the user is prompted for the password. If this
+	 * matches the value stored in the database, print Success and set loggedIn to
+	 * true.
+	 * 
+	 * @param none
+	 * @return none
+	 */
+	public static void technicianLogIn() {
+		System.out.println("Please enter your email address:");
+		String email = sc.nextLine();
+
+		Account account = db.getTechnicianAccount(email);
 
 		if (account == null) {
 			System.out.println("Email not found, please check the address and try again.");
