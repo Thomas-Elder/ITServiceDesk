@@ -28,12 +28,12 @@ public class Ticket {
 	public Severity severity;
 	public ITSystem itsystem;
 
-	Ticket(String description, Date creationDate, Status status, Technician assignedTechnician, Severity severity, ITSystem itsystem) {
+	Ticket(String description, Status status, Severity severity, ITSystem itsystem) {
 		this.description = description;
-		this.creationDate = creationDate;
 		this.status = status;
-		this.assignedTechnician = assignedTechnician;
 		this.severity = severity;
 		this.itsystem = itsystem;
+
+		this.creationDate = new Date();
 	}
 }
