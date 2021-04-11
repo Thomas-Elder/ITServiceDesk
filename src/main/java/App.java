@@ -119,7 +119,8 @@ public class App {
 					// Print Technician action options
 					System.out.println();
 					System.out.println("Please select an option:");
-					System.out.println("1 - View Ticket list");
+					System.out.println("1 - View Full Ticket list");
+					System.out.println("2 - View My Ticket list");
 					System.out.println("X - Exit");
 
 					// Get input
@@ -127,8 +128,11 @@ public class App {
 
 					switch (option) {
 					case '1':
-						// List tickets for this Technician
+						printAllTickets();
 						break;
+					case '2':
+						printMyTickets();
+						break;	
 					case 'X':
 						break;
 					default:
@@ -294,5 +298,24 @@ public class App {
 		} else {
 			System.out.println("You can create a ticket!");
 		}
+	}
+
+	/**
+	 * <h2>Print All Tickets</h2>
+	 * Prints a list of all tickets currently in the system.
+	 */
+	public static void printAllTickets(){
+		for (Ticket ticket : db.getTickets()) {
+			System.out.println("Description: " + ticket.description);
+			System.out.println("Creation Date: " + ticket.creationDate);
+			System.out.println("Status: " + ticket.status);
+			System.out.println("Assigned Technician: " + ticket.assignedTechnician.name);
+			System.out.println("Severity: " + ticket.severity);
+			System.out.println("IT System OS: " + ticket.itsystem.OS);
+		}
+	}
+
+	public static void printMyTickets(){
+
 	}
 }
