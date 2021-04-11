@@ -11,7 +11,7 @@ public class App {
 	static Scanner sc;
 	static Database db;
 	static Boolean loggedIn;
-	static Account user;
+	static Account user;	
 
 	/**
 	 * <h2>Main</h2> This is the entry point for the application.
@@ -87,7 +87,8 @@ public class App {
 				System.out.println();
 				System.out.println("Please select an option:");
 				System.out.println("1 - Create an Account");
-				System.out.println("2 - Log in");
+				System.out.println("2 - Staff Log in");
+				System.out.println("3 - Technician Log in");
 				System.out.println("X - Exit");
 
 				// Get input
@@ -99,6 +100,9 @@ public class App {
 					break;
 				case '2':
 					staffLogIn();
+					break;
+				case '3':
+					technicianLogIn();
 					break;
 				case 'X':
 					break;
