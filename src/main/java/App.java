@@ -81,7 +81,7 @@ public class App {
 
 		char option = '0';
 
-		while (option != 'X') {
+		while (option != 'X' && option != 'x') {
 
 			// If the user is not loggedIn, create/log in.
 			if (!loggedIn) {
@@ -108,6 +108,8 @@ public class App {
 					technicianLogIn();
 					break;
 				case 'X':
+				case 'x':
+					System.out.println("Thanks for using the Cinco IT Service Desk!");
 					break;
 				default:
 					System.out.println("Please select a valid option.");
