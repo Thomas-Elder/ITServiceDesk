@@ -221,6 +221,8 @@ public class App {
 
 			// Add new Account to the db
 			db.addStaffAccount(new Staff(email, name, number, password));
+
+			System.out.println("Account successfully created!");
 		}
 	}
 
@@ -251,7 +253,7 @@ public class App {
 			String password = sc.nextLine();
 
 			if (password.equals(account.password)) {
-				System.out.println("Success!");
+				System.out.println("Success! You're logged in.");
 				loggedIn = true;
 				user = account;
 			}
@@ -285,7 +287,7 @@ public class App {
 			String password = sc.nextLine();
 
 			if (password.equals(account.password)) {
-				System.out.println("Success!");
+				System.out.println("Success! You're logged in.");
 				loggedIn = true;
 				user = account;
 			}
