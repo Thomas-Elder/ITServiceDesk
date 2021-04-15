@@ -139,6 +139,8 @@ public class App {
 						printMyTickets((Technician)user);
 						break;	
 					case 'X':
+					case 'x':
+						System.out.println("Thanks for using the Cinco IT Service Desk!");
 						break;
 					default:
 						System.out.println("Please select a valid option.");
@@ -151,6 +153,7 @@ public class App {
 					System.out.println();
 					System.out.println("Please select an option:");
 					System.out.println("1 - Create a Ticket");
+					System.out.println("2 - View Ticket list");
 					System.out.println("X - Exit");
 
 					// Get input
@@ -160,7 +163,12 @@ public class App {
 					case '1':
 						createTicket();
 						break;
+					case '2':
+						printAllTickets();
+						break;
 					case 'X':
+					case 'x':
+						System.out.println("Thanks for using the Cinco IT Service Desk!");
 						break;
 					default:
 						System.out.println("Please select a valid option.");
@@ -241,15 +249,15 @@ public class App {
 	 * @return none
 	 */
 	public static void staffLogIn() {
-		System.out.println("Please enter your email address:");
+		System.out.println("\nPlease enter your email address:");
 		String email = sc.nextLine();
 
 		Account account = db.getStaffAccount(email);
 
 		if (account == null) {
-			System.out.println("Email not found, please check the address and try again.");
+			System.out.println("\nEmail not found, please check the address and try again.");
 		} else {
-			System.out.println("Please enter your password:");
+			System.out.println("\nPlease enter your password:");
 			String password = sc.nextLine();
 
 			if (password.equals(account.password)) {
@@ -326,9 +334,8 @@ public class App {
 		description = sc.nextLine();
 		System.out.println("\nSelect the severity:");
 		
-		int i = 1;
 		for(Ticket.Severity s: Ticket.Severity.values()){
-			System.out.printf("%d - %s \n", i++, s);
+			System.out.printf("%s\n", s);
 		} 
 		severity = Ticket.Severity.valueOf(sc.nextLine());
 
@@ -356,8 +363,11 @@ public class App {
 	public static void printAllTickets(){
 		System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician", "Severity");
 
+		// TODO The assignedTechnician field is currently not being set automatically, and causes 
+		// an error on print. Just popped a string in there toget the rest of the functionality working
+		// first. 
 		for (Ticket ticket : db.getTickets()) {
-			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, ticket.assignedTechnician.name, ticket.severity);
+			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, "To do!", ticket.severity);
 		}
 	}
 
