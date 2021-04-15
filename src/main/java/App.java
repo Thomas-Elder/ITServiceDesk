@@ -54,7 +54,7 @@ public class App {
 		db.addStaffAccount(new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234"));
 
 		// Create test Ticket for testing
-		ITSystem itSystem = new ITSystem("OS", "system", "program", "version", "description");
+		ITSystem itSystem = new ITSystem("OS", "program", "version");
 		Ticket ticket = new Ticket("Test", Ticket.Status.open, Ticket.Severity.low, itSystem);
 		ticket.assignedTechnician = db.getTechnicianAccount("harry.style@cinco.com");
 		db.addTicket(ticket);
@@ -275,15 +275,15 @@ public class App {
 	 * @return none
 	 */
 	public static void technicianLogIn() {
-		System.out.println("Please enter your email address:");
+		System.out.println("\nPlease enter your email address:");
 		String email = sc.nextLine();
 
 		Account account = db.getTechnicianAccount(email);
 
 		if (account == null) {
-			System.out.println("Email not found, please check the address and try again.");
+			System.out.println("\nEmail not found, please check the address and try again.");
 		} else {
-			System.out.println("Please enter your password:");
+			System.out.println("\nPlease enter your password:");
 			String password = sc.nextLine();
 
 			if (password.equals(account.password)) {
@@ -303,11 +303,47 @@ public class App {
 	 */
 	public static void createTicket() {
 
-		if (!loggedIn) {
-			System.out.println("You must be logged in to create a ticket!");
-		} else {
-			System.out.println("You can create a ticket!");
-		}
+		// Initialise variables
+		// Ticket vars
+		String description;
+		Ticket.Severity severity;
+		Ticket.Status status;
+
+		// ITSystem vars
+		String os;
+		String program;
+		String version;
+
+		// Object vars
+		ITSystem itSystem;
+		Ticket ticket;
+
+		// Set status to open
+		status = Ticket.Status.open;
+
+		// Get user input for required Ticket variables
+		System.out.println("\nEnter a description of the issue you're having:");
+		description = sc.nextLine();
+		System.out.println("\nSelect the severity:");
+		
+		int i = 1;
+		for(Ticket.Severity s: Ticket.Severity.values()){
+			System.out.printf("%d - %s \n", i++, s);
+		} 
+		severity = Ticket.Severity.valueOf(sc.nextLine());
+
+		// Get user input for the required ITSystem variables
+		System.out.println("\nEnter your operating system:");
+		os = sc.nextLine();
+		System.out.println("\nEnter the program you're using:");
+		program = sc.nextLine();
+		System.out.println("\nEnter the version of that program you're using:");
+		version = sc.nextLine();
+
+		// Create the ITSystem and Ticket and send to the db
+		itSystem = new ITSystem(os, program, version);
+		ticket = new Ticket(description, status, severity, itSystem);
+		db.addTicket(ticket);
 	}
 
 	/**
@@ -337,7 +373,7 @@ public class App {
 		List<Ticket> myTickets = db.getTickets(technician);
 
 		if (myTickets.size() == 0) {
-			
+
 			System.out.println("You don't have any tickets at the moment!");
 		} else {
 
