@@ -318,13 +318,10 @@ public class App {
 	 * @return none
 	 */
 	public static void printAllTickets(){
+		System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician", "Severity");
+
 		for (Ticket ticket : db.getTickets()) {
-			System.out.println("Description: " + ticket.description);
-			System.out.println("Creation Date: " + ticket.creationDate);
-			System.out.println("Status: " + ticket.status);
-			System.out.println("Assigned Technician: " + ticket.assignedTechnician.name);
-			System.out.println("Severity: " + ticket.severity);
-			System.out.println("IT System OS: " + ticket.itsystem.OS);
+			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, ticket.assignedTechnician.name, ticket.severity);
 		}
 	}
 
@@ -340,16 +337,14 @@ public class App {
 		List<Ticket> myTickets = db.getTickets(technician);
 
 		if (myTickets.size() == 0) {
+			
 			System.out.println("You don't have any tickets at the moment!");
 		} else {
 
-			for (Ticket ticket : myTickets) {
-				System.out.println("Description: " + ticket.description);
-				System.out.println("Creation Date: " + ticket.creationDate);
-				System.out.println("Status: " + ticket.status);
-				System.out.println("Assigned Technician: " + ticket.assignedTechnician.name);
-				System.out.println("Severity: " + ticket.severity);
-				System.out.println("IT System OS: " + ticket.itsystem.OS);
+			System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician", "Severity");
+
+			for (Ticket ticket : db.getTickets()) {
+				System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, ticket.assignedTechnician.name, ticket.severity);
 			}
 		}
 	}
