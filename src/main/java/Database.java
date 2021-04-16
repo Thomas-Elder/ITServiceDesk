@@ -29,8 +29,16 @@ public class Database {
         return technicianAccountsHashMap.get(email);
     }
 
+    public List<Technician> getAllTechnicians() {
+        return new ArrayList<Technician>(technicianAccountsHashMap.values());
+    } 
+
     public void addTicket(Ticket newTicket){
         ticketList.add(newTicket);
+    }
+
+    public void updateTickets(List<Ticket> ticketlist) {
+        this.ticketList = ticketlist;
     }
 
     public List<Ticket> getTickets() {

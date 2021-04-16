@@ -2,19 +2,18 @@
 import java.util.*;
 
 /**
- * <h1>Cinco IT Service Desk Application</h1>
- * A simple application for managing tickets for IT tasks.
+ * <h1>Cinco IT Service Desk Application</h1> A simple application for managing
+ * tickets for IT tasks.
  */
 public class App {
 
 	static Scanner sc;
 	static Database db;
 	static Boolean loggedIn;
-	static Account user;	
+	static Account user;
 
 	/**
-	 * <h2>Main</h2>
-	 * This is the entry point for the application.
+	 * <h2>Main</h2> This is the entry point for the application.
 	 * 
 	 * @param not used
 	 * @return none
@@ -28,8 +27,7 @@ public class App {
 	}
 
 	/**
-	 * <h2>Init</h2>
-	 * Initialise required fields and hardcoded values.
+	 * <h2>Init</h2> Initialise required fields and hardcoded values.
 	 * 
 	 * Initialises the Database, then adds the hardcoded Accounts. Initialises the
 	 * Scanner used for getting input from the user. Initialises the loggedIn field,
@@ -67,8 +65,7 @@ public class App {
 	}
 
 	/**
-	 * <h2>Interaction Loop</h2>
-	 * Runs the main interaction loop.
+	 * <h2>Interaction Loop</h2> Runs the main interaction loop.
 	 * 
 	 * Displays the options available to the user, based on whether they're logged
 	 * in or not, until they enter X to exit the application.
@@ -136,8 +133,8 @@ public class App {
 						printAllTickets();
 						break;
 					case '2':
-						printMyTickets((Technician)user);
-						break;	
+						printMyTickets((Technician) user);
+						break;
 					case 'X':
 					case 'x':
 						System.out.println("Thanks for using the Cinco IT Service Desk!");
@@ -179,8 +176,7 @@ public class App {
 	}
 
 	/**
-	 * <h2>End</h2>
-	 * Clean up before ending execution.
+	 * <h2>End</h2> Clean up before ending execution.
 	 * 
 	 * Closes any open resources, which at this point is just the Scanner.
 	 * 
@@ -192,8 +188,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Create Account</h2>
-	 * Prompts user for details in order to create a new Account.
+	 * <h2>Create Account</h2> Prompts user for details in order to create a new
+	 * Account.
 	 * 
 	 * First prompts for the email address to use, and checks if this is already in
 	 * the database. If it is, the function returns.
@@ -235,8 +231,7 @@ public class App {
 	}
 
 	/**
-	 * <h2>Staff Log In</h2>
-	 * Prompts the user for log in details.
+	 * <h2>Staff Log In</h2> Prompts the user for log in details.
 	 * 
 	 * First prompts for an email address, and checks if it is in the database. If
 	 * it is not, the function returns.
@@ -269,8 +264,7 @@ public class App {
 	}
 
 	/**
-	 * <h2>Technician Log In</h2>
-	 * Prompts the user for log in details.
+	 * <h2>Technician Log In</h2> Prompts the user for log in details.
 	 * 
 	 * First prompts for an email address, and checks if it is in the database. If
 	 * it is not, the function returns.
@@ -303,8 +297,70 @@ public class App {
 	}
 
 	/**
-	 * <h2>Create Ticket</h2> 
-	 * Prompts the user to enter details to create a new Ticket.
+	 * <h2>Assign Tickets</h2> Assigns technicians to tickets based on severity.
+	 * 
+	 * First obtains the Tickets and Technicians from the DB. Will then iterate
+	 * through both the Technicians and the Tickets and assign Tickets to Technicians
+	 * based on severity 
+	 * 
+	 * @param none
+	 * @return none
+	 */
+	public static void assignTickets() {
+		// Obtain all the tickets from the database
+		List<Ticket> ticketList = db.getTickets();
+		// Obtain all the Technicians from the database
+		List<Technician> technicianList = db.getAllTechnicians();
+
+		// First loop for Critical prio Tickets
+		for (int i = 0; i < ticketList.size(); i++) {
+			if (ticketList.get(i).severity == Ticket.Severity.critical
+					& ticketList.get(i).status == Ticket.Status.open) {
+				for (int x = 0; x < technicianList.size(); x++) {
+					if (technicianList.get(x).level > 75) {
+						ticketList.get(i).assignedTechnician = technicianList.get(x);
+					}
+				}
+			}
+		}
+
+		// Seconds loop for High prio Tickets
+		for (int i = 0; i < ticketList.size(); i++) {
+			if (ticketList.get(i).severity == Ticket.Severity.high & ticketList.get(i).status == Ticket.Status.open) {
+				for (int x = 0; x < technicianList.size(); x++) {
+					if (technicianList.get(x).level > 50) {
+						ticketList.get(i).assignedTechnician = technicianList.get(x);
+					}
+				}
+			}
+		}
+
+		// Third Loop for Medium prio Tickets
+		for (int i = 0; i < ticketList.size(); i++) {
+			if (ticketList.get(i).severity == Ticket.Severity.medium & ticketList.get(i).status == Ticket.Status.open) {
+				for (int x = 0; x < technicianList.size(); x++) {
+					if (technicianList.get(x).level > 25) {
+						ticketList.get(i).assignedTechnician = technicianList.get(x);
+					}
+				}
+			}
+		}
+
+		// Final loop for low prio Tickets
+		for (int i = 0; i < ticketList.size(); i++) {
+			if (ticketList.get(i).severity == Ticket.Severity.low & ticketList.get(i).status == Ticket.Status.open) {
+				for (int x = 0; x < technicianList.size(); x++) {
+					ticketList.get(i).assignedTechnician = technicianList.get(x);
+				}
+			}
+		}
+
+		db.updateTickets(ticketList);
+	}
+
+	/**
+	 * <h2>Create Ticket</h2> Prompts the user to enter details to create a new
+	 * Ticket.
 	 * 
 	 * @param none
 	 * @return none
@@ -333,10 +389,10 @@ public class App {
 		System.out.println("\nEnter a description of the issue you're having:");
 		description = sc.nextLine();
 		System.out.println("\nSelect the severity:");
-		
-		for(Ticket.Severity s: Ticket.Severity.values()){
+
+		for (Ticket.Severity s : Ticket.Severity.values()) {
 			System.out.printf("%s\n", s);
-		} 
+		}
 		severity = Ticket.Severity.valueOf(sc.nextLine());
 
 		// Get user input for the required ITSystem variables
@@ -354,31 +410,33 @@ public class App {
 	}
 
 	/**
-	 * <h2>Print All Tickets</h2>
-	 * Prints a list of all tickets currently in the system.
+	 * <h2>Print All Tickets</h2> Prints a list of all tickets currently in the
+	 * system.
 	 * 
 	 * @param none
 	 * @return none
 	 */
-	public static void printAllTickets(){
+	public static void printAllTickets() {
 		System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician", "Severity");
 
-		// TODO The assignedTechnician field is currently not being set automatically, and causes 
-		// an error on print. Just popped a string in there toget the rest of the functionality working
-		// first. 
+		// TODO The assignedTechnician field is currently not being set automatically,
+		// and causes
+		// an error on print. Just popped a string in there toget the rest of the
+		// functionality working
+		// first.
 		for (Ticket ticket : db.getTickets()) {
-			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, "To do!", ticket.severity);
+			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, "To do!",
+					ticket.severity);
 		}
 	}
 
 	/**
-	 * <h2>Print My Tickets</h2>
-	 * Print all the tickets for the specified Technician.
+	 * <h2>Print My Tickets</h2> Print all the tickets for the specified Technician.
 	 * 
 	 * @param technician
 	 * @return none
 	 */
-	public static void printMyTickets(Technician technician){
+	public static void printMyTickets(Technician technician) {
 
 		List<Ticket> myTickets = db.getTickets(technician);
 
@@ -387,10 +445,12 @@ public class App {
 			System.out.println("You don't have any tickets at the moment!");
 		} else {
 
-			System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician", "Severity");
+			System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician",
+					"Severity");
 
 			for (Ticket ticket : db.getTickets()) {
-				System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, ticket.assignedTechnician.name, ticket.severity);
+				System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status,
+						ticket.assignedTechnician.name, ticket.severity);
 			}
 		}
 	}
