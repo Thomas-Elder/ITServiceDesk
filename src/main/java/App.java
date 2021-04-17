@@ -300,8 +300,11 @@ public class App {
 	 * <h2>Assign Tickets</h2> Assigns technicians to tickets based on severity.
 	 * 
 	 * First obtains the Tickets and Technicians from the DB. Will then iterate
-	 * through both the Technicians and the Tickets and assign Tickets to Technicians
-	 * based on severity 
+	 * through both the Technicians and the Tickets and assign Tickets to
+	 * Technicians based on severity.
+	 * 
+	 * This method will also add the Assigned ticket to the technicians active
+	 * tickets list
 	 * 
 	 * @param none
 	 * @return none
@@ -319,6 +322,7 @@ public class App {
 				for (int x = 0; x < technicianList.size(); x++) {
 					if (technicianList.get(x).level > 75) {
 						ticketList.get(i).assignedTechnician = technicianList.get(x);
+						technicianList.get(x).addTicket(ticketList.get(i));
 					}
 				}
 			}
@@ -330,6 +334,7 @@ public class App {
 				for (int x = 0; x < technicianList.size(); x++) {
 					if (technicianList.get(x).level > 50) {
 						ticketList.get(i).assignedTechnician = technicianList.get(x);
+						technicianList.get(x).addTicket(ticketList.get(i));
 					}
 				}
 			}
@@ -341,6 +346,7 @@ public class App {
 				for (int x = 0; x < technicianList.size(); x++) {
 					if (technicianList.get(x).level > 25) {
 						ticketList.get(i).assignedTechnician = technicianList.get(x);
+						technicianList.get(x).addTicket(ticketList.get(i));
 					}
 				}
 			}
@@ -351,6 +357,7 @@ public class App {
 			if (ticketList.get(i).severity == Ticket.Severity.low & ticketList.get(i).status == Ticket.Status.open) {
 				for (int x = 0; x < technicianList.size(); x++) {
 					ticketList.get(i).assignedTechnician = technicianList.get(x);
+					technicianList.get(x).addTicket(ticketList.get(i));
 				}
 			}
 		}
