@@ -1,22 +1,16 @@
 Welcome to Cinco IT Service Desk!
 
-Cinco IT Service Desk is an application that will help you organise tickets.
+Cinco IT Service Desk is an application that will help you organise tickets. This document will guide you through the process of compiling and running the application.
 
+First make sure the location you've saved the ITServiceDesk folder is local on the machine.
 
-How to launch the application on myDesktop:
+1 - Click on the start menu and type 'openJDK CMD' and click to run. 
+2 - You'll then need to navigate to the location you saved the ITServiceDesk project. If you're not sure how to do this in the cmdline, the easiest way might be to open a File Explorer and navigate to the extracted folders. Shift right click on the ITServiceDesk folder and select 'copy as path'.
+    Return to the openJDK CMD window, and type 'cd ', paste the path you copied and press enter. 
+3 - At this point you need to compile the project using the following command:
+    javac -source 1.8 -target 1.8 -d .\target\. .\src\*.java
+4 - Next step is starting the application with the following command:
+    java -cp .\target\. App
+5 - Then follow the prompts in the application to create accounts, log in, and manage tickets.
 
-1. Save the ITServiceDesk.jar to the documents folder.
-2. Click on the Windows button on the bottom left inside the myDesktop window to open the start menu.
-3. While the Start menu is open, type 'openjdk cmd'
-4. Under Best match, click on 'OpenJDK CMD'
-5. Once the command prompt is open, type:
-	java -jar ITServiceDesk.jar
-6. Once the application is opened, you will be greeted with: 
-	Welcome to Cinco IT Service Desk!
-
-	Please select an option:
-	1 - Create an Account
-	2 - Staff Log in
-	3 - Technician Log in
-	X - Exit
-7. Follow the prompts in the application to continue organising accounts and tickets.
+Enjoy.
