@@ -123,10 +123,20 @@ public class App {
 					System.out.println("Please select an option:");
 					System.out.println("1 - View Full Ticket list");
 					System.out.println("2 - View My Ticket list");
+					System.out.println("3 - Amend severity of a ticket");
+					System.out.println("4 - Amend status of a ticket");
 					System.out.println("X - Exit");
 
 					// Get input
 					option = sc.nextLine().toCharArray()[0];
+
+					List<Ticket> tickets = db.getTickets();
+
+					int selection;
+					char severity;
+					char status;
+
+					int i;
 
 					switch (option) {
 					case '1':
@@ -135,9 +145,84 @@ public class App {
 					case '2':
 						printMyTickets((Technician) user);
 						break;
+					case '3': // Amend severity
+						// Print all tickets with numbers
+
+						System.out.println("\nPlease select the ticket you wish to amend:");
+						for (i = 0; i < tickets.size(); i++) {
+							System.out.printf("%d - %s\n", i, tickets.get(i).description);
+						}
+
+						// Accept input for which ticket
+						selection = Integer.parseInt(sc.nextLine());
+
+						// Choose severity of ticket
+						System.out.println("\nPlease select the new severity of the ticket:");
+						System.out.println("0 - Low");
+						System.out.println("1 - Medium");
+						System.out.println("2 - High");
+
+						severity = sc.nextLine().toCharArray()[0];
+
+						switch (severity) {
+						case '0':
+							db.ticketList.get(selection).severity = Ticket.Severity.low;
+							System.out.println("Ticket severity updated!");
+							break;
+						case '1':
+							db.ticketList.get(selection).severity = Ticket.Severity.medium;
+							System.out.println("Ticket severity updated!");
+							break;
+						case '2':
+							db.ticketList.get(selection).severity = Ticket.Severity.high;
+							System.out.println("Ticket severity updated!");
+							break;
+						default:
+							System.out.println("Invalid Input!");
+						}
+
+						break;
+					case '4': // Amend status
+						// Print all tickets with numbers
+						System.out.println("\nPlease select the ticket you wish to amend:");
+						i = 0;
+						for (Ticket ticket : db.ticketList) {
+							System.out.printf("%d - %s - %s\n", i, ticket.description, ticket.status);
+							i++;
+						}
+
+						// Accept input for which ticket
+						selection = Integer.parseInt(sc.nextLine());
+
+						System.out.println("\nPlease select the new status:");
+						// Choose status of ticket
+						System.out.println("0 - Open");
+						System.out.println("1 - Closed");
+						System.out.println("2 - Archived");
+
+						status = sc.nextLine().toCharArray()[0];
+
+						switch (status) {
+						case '0':
+							db.ticketList.get(selection).status = Ticket.Status.open;
+							System.out.println("Ticket status updated!");
+							break;
+						case '1':
+							db.ticketList.get(selection).status = Ticket.Status.closed;
+							System.out.println("Ticket status updated!");
+							break;
+						case '2':
+							db.ticketList.get(selection).status = Ticket.Status.archived;
+							System.out.println("Ticket status updated!");
+							break;
+						default:
+							System.out.println("Invalid Input!");
+						}
+
+						break;
 					case 'X':
 					case 'x':
-						System.out.println("Thanks for using the Cinco IT Service Desk!");
+						System.out.println("\nThanks for using the Cinco IT Service Desk!\n");
 						break;
 					default:
 						System.out.println("Please select a valid option.");
@@ -297,75 +382,6 @@ public class App {
 	}
 
 	/**
-	 * <h2>Assign Tickets</h2> Assigns technicians to tickets based on severity.
-	 * 
-	 * First obtains the Tickets and Technicians from the DB. Will then iterate
-	 * through both the Technicians and the Tickets and assign Tickets to
-	 * Technicians based on severity.
-	 * 
-	 * This method will also add the Assigned ticket to the technicians active
-	 * tickets list
-	 * 
-	 * @param none
-	 * @return none
-	 */
-	public static void assignTickets() {
-		// Obtain all the tickets from the database
-		List<Ticket> ticketList = db.getTickets();
-		// Obtain all the Technicians from the database
-		List<Technician> technicianList = db.getAllTechnicians();
-
-		// First loop for Critical prio Tickets
-		for (int i = 0; i < ticketList.size(); i++) {
-			if (ticketList.get(i).severity == Ticket.Severity.critical
-					& ticketList.get(i).status == Ticket.Status.open) {
-				for (int x = 0; x < technicianList.size(); x++) {
-					if (technicianList.get(x).level > 75) {
-						ticketList.get(i).assignedTechnician = technicianList.get(x);
-						technicianList.get(x).addTicket(ticketList.get(i));
-					}
-				}
-			}
-		}
-
-		// Seconds loop for High prio Tickets
-		for (int i = 0; i < ticketList.size(); i++) {
-			if (ticketList.get(i).severity == Ticket.Severity.high & ticketList.get(i).status == Ticket.Status.open) {
-				for (int x = 0; x < technicianList.size(); x++) {
-					if (technicianList.get(x).level > 50) {
-						ticketList.get(i).assignedTechnician = technicianList.get(x);
-						technicianList.get(x).addTicket(ticketList.get(i));
-					}
-				}
-			}
-		}
-
-		// Third Loop for Medium prio Tickets
-		for (int i = 0; i < ticketList.size(); i++) {
-			if (ticketList.get(i).severity == Ticket.Severity.medium & ticketList.get(i).status == Ticket.Status.open) {
-				for (int x = 0; x < technicianList.size(); x++) {
-					if (technicianList.get(x).level > 25) {
-						ticketList.get(i).assignedTechnician = technicianList.get(x);
-						technicianList.get(x).addTicket(ticketList.get(i));
-					}
-				}
-			}
-		}
-
-		// Final loop for low prio Tickets
-		for (int i = 0; i < ticketList.size(); i++) {
-			if (ticketList.get(i).severity == Ticket.Severity.low & ticketList.get(i).status == Ticket.Status.open) {
-				for (int x = 0; x < technicianList.size(); x++) {
-					ticketList.get(i).assignedTechnician = technicianList.get(x);
-					technicianList.get(x).addTicket(ticketList.get(i));
-				}
-			}
-		}
-
-		db.updateTickets(ticketList);
-	}
-
-	/**
 	 * <h2>Create Ticket</h2> Prompts the user to enter details to create a new
 	 * Ticket.
 	 * 
@@ -432,8 +448,8 @@ public class App {
 		// functionality working
 		// first.
 		for (Ticket ticket : db.getTickets()) {
-			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status, "To do!",
-					ticket.severity);
+			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status,
+					ticket.assignedTechnician.name, ticket.severity);
 		}
 	}
 

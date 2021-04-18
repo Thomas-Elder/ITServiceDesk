@@ -18,7 +18,7 @@ public class Ticket {
 	}
 
 	public enum Severity {
-		critical, high, medium, low;
+		high, medium, low;
 	}
 
 	public String description;

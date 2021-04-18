@@ -16,6 +16,7 @@ How to launch the application on myDesktop:
 
 	Please select an option:
 	1 - Create an Account
-	2 - Log in
+	2 - Staff Log in
+	3 - Technician Log in
 	X - Exit
 7. Follow the prompts in the application to continue organising accounts and tickets.
