@@ -1,3 +1,5 @@
+import java.util.List;
+import java.util.ArrayList;
 public class Technician extends Account {
 
     public int level;
@@ -20,6 +22,6 @@ public class Technician extends Account {
     }
 
     public void closeTicket(Ticket ticket) {
-        activeTicket.remove(ticket);
+        activeTickets.remove(ticket);
     }
 }
