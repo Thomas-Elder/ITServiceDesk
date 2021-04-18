@@ -442,11 +442,6 @@ public class App {
 	public static void printAllTickets() {
 		System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician", "Severity");
 
-		// TODO The assignedTechnician field is currently not being set automatically,
-		// and causes
-		// an error on print. Just popped a string in there toget the rest of the
-		// functionality working
-		// first.
 		for (Ticket ticket : db.getTickets()) {
 			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status,
 					ticket.assignedTechnician.name, ticket.severity);
