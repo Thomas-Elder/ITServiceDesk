@@ -43,7 +43,7 @@ public class App {
 	 * @return none
 	 * @throws ParseException
 	 */
-	public static void init() throws ParseException {
+	public static void init() {
 
 		// Initialise Database
 		db = new Database();
@@ -74,13 +74,20 @@ public class App {
 		testTickets.add(new Ticket(jane, "Test 6", Ticket.Status.open, Ticket.Severity.high, itSystem));
 
 		// Change dates on some tickets so they're older
-		testTickets.get(0).creationDate = LocalDate.parse("2021-03-10");
-		testTickets.get(5).creationDate = LocalDate.parse("2021-03-10");
-		testTickets.get(3).creationDate = LocalDate.parse("2021-04-12");
-		testTickets.get(6).creationDate = LocalDate.parse("2021-04-14");
+		try {
+			testTickets.get(0).creationDate = LocalDate.parse("2021-03-10");
+			testTickets.get(5).creationDate = LocalDate.parse("2021-03-10");
+			testTickets.get(3).creationDate = LocalDate.parse("2021-04-12");
+			testTickets.get(6).creationDate = LocalDate.parse("2021-04-14");
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+
+		// Change some status to test the report properly.
 		testTickets.get(3).updateStatus(Ticket.Status.closed);
 		testTickets.get(6).updateStatus(Ticket.Status.archived);
 
+		// Add all tickets to the db
 		for (Ticket ticket : testTickets){
 			db.addTicket(ticket);
 		}
