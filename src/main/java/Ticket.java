@@ -39,7 +39,14 @@ public class Ticket {
 	}
 
 	public void updateStatus(Status status) {
+
+		// If we're closing the ticket, update the actionDate
 		if (status == Ticket.Status.closed) {
+			this.actionDate = new Date();
+		}
+
+		// If we're going from open to archived, update the actionDate
+		if (status == Ticket.Status.archived && this.status == Ticket.Status.open) {
 			this.actionDate = new Date();
 		}
 
