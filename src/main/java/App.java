@@ -370,6 +370,10 @@ public class App {
 		// Accept input for which ticket
 		int selection = Integer.parseInt(sc.nextLine());
 
+		// Get ticket, and pop from db
+		Ticket ticket = db.ticketList.get(selection);
+		db.ticketList.remove(selection);
+
 		// Choose severity of ticket
 		System.out.println("\nPlease select the new severity of the ticket:");
 		System.out.println("0 - Low");
@@ -380,15 +384,18 @@ public class App {
 
 		switch (severity) {
 		case '0':
-			db.ticketList.get(selection).severity = Ticket.Severity.low;
+			ticket.severity = Ticket.Severity.low;
+			db.addTicket(ticket);
 			System.out.println("Ticket severity updated!");
 			break;
 		case '1':
-			db.ticketList.get(selection).severity = Ticket.Severity.medium;
+			ticket.severity = Ticket.Severity.medium;
+			db.addTicket(ticket);
 			System.out.println("Ticket severity updated!");
 			break;
 		case '2':
-			db.ticketList.get(selection).severity = Ticket.Severity.high;
+			ticket.severity = Ticket.Severity.high;
+			db.addTicket(ticket);
 			System.out.println("Ticket severity updated!");
 			break;
 		default:
