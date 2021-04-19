@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +81,13 @@ public class Database {
 
     public List<Ticket> getTickets() {
         return ticketList;
+    }
+
+    public List<Ticket> getTickets(Date start, Date end) {
+
+        return this.ticketList.stream().filter(t -> t.creationDate.after(start))
+                                       .filter(t -> t.creationDate.before(end))
+                                       .collect(Collectors.toList());
     }
 
     public List<Ticket> getTickets(Technician technician) {
