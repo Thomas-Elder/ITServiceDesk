@@ -110,6 +110,7 @@ public class App {
 	 * @throws ParseException
 	 */
 	public static void interactionLoop() {
+		System.out.println();
 		System.out.println("Welcome to Cinco IT Service Desk!");
 
 		char option = '0';
@@ -148,7 +149,7 @@ public class App {
 					System.out.println("Please select a valid option.");
 				}
 
-				// If the user is loggedIn, create/view Tickets.
+			// If the user is loggedIn, create/view Tickets.
 			} else {
 
 				// If the user is Technician...
@@ -214,6 +215,7 @@ public class App {
 					case 'X':
 					case 'x':
 						System.out.println("Thanks for using the Cinco IT Service Desk!");
+						System.out.println();
 						break;
 					default:
 						System.out.println("Please select a valid option.");
@@ -249,32 +251,34 @@ public class App {
 	 * @return none
 	 */
 	public static void createStaffAccount() {
-		System.out.println("Please enter your email address:");
+
+		System.out.println("\nPlease enter your email address:");
 		String email = sc.nextLine();
 
 		Account account = db.getStaffAccount(email);
 
 		// Check if the db contains an Account with this email address
 		if (account != null) {
-			System.out.println("Email already in use. Please use a different address.");
+			System.out.println("\nEmail already in use. Please use a different address.");
 
 			// Otherwise, continue with Account creation
 		} else {
 			String name, number, password;
 
-			System.out.println("Please enter your name:");
+			System.out.println("\nPlease enter your name:");
 			name = sc.nextLine();
 
-			System.out.println("Please enter your number:");
+			System.out.println("\nPlease enter your number:");
 			number = sc.nextLine();
 
-			System.out.println("Please enter your password:");
+			System.out.println("\nPlease enter your password:");
 			password = sc.nextLine();
 
 			// Add new Account to the db
 			db.addStaffAccount(new Staff(email, name, number, password));
 
-			System.out.println("Account successfully created!");
+			System.out.println("\nAccount successfully created!");
+			System.out.println();
 		}
 	}
 
@@ -305,6 +309,7 @@ public class App {
 
 			if (password.equals(account.password)) {
 				System.out.println("Success! You're logged in.");
+				System.out.println();
 				loggedIn = true;
 				user = account;
 			}
@@ -338,6 +343,7 @@ public class App {
 
 			if (password.equals(account.password)) {
 				System.out.println("Success! You're logged in.");
+				System.out.println();
 				loggedIn = true;
 				user = account;
 			}
@@ -408,7 +414,7 @@ public class App {
 		System.out.println("\nPlease select the ticket you wish to amend:");
 		int i = 0;
 		for (Ticket ticket : db.ticketList) {
-			System.out.printf("%d - %s - %s\n", i, ticket.description, ticket.status);
+			System.out.printf("%d - %s - %s\n", i, ticket.description, ticket.severity);
 			i++;
 		}
 
