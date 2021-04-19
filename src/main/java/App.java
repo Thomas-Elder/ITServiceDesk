@@ -53,9 +53,12 @@ public class App {
 
 		// Create test Ticket for testing
 		ITSystem itSystem = new ITSystem("OS", "program", "version");
-		Ticket ticket = new Ticket("Test", Ticket.Status.open, Ticket.Severity.low, itSystem);
-		ticket.assignedTechnician = db.getTechnicianAccount("harry.style@cinco.com");
-		db.addTicket(ticket);
+		db.addTicket(new Ticket("Test", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		db.addTicket(new Ticket("Test 1", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		db.addTicket(new Ticket("Test 2", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		db.addTicket(new Ticket("Test 3", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		db.addTicket(new Ticket("Test 4", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		db.addTicket(new Ticket("Test 5", Ticket.Status.open, Ticket.Severity.high, itSystem));
 
 		// Initialise Scanner for input
 		sc = new Scanner(System.in);
@@ -440,11 +443,20 @@ public class App {
 	 * @return none
 	 */
 	public static void printAllTickets() {
-		System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician", "Severity");
+		System.out.printf("\n%-35s 35s %-10s %-25s %-10s\n", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
 
 		for (Ticket ticket : db.getTickets()) {
-			System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status,
+
+			// If the ticket is still open, print creationDate, status, tech and severity
+			if (ticket.status == Ticket.Status.open) {
+				System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), "", ticket.status,
 					ticket.assignedTechnician.name, ticket.severity);
+
+			// If the ticket is closed, print creationDate, actionDate, status, tech and severity
+			} else {
+				System.out.printf("%-35s -35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+					ticket.assignedTechnician.name, ticket.severity);
+			}
 		}
 	}
 
@@ -455,7 +467,7 @@ public class App {
 	 * @return none
 	 */
 	public static void printMyTickets(Technician technician) {
-
+		System.out.println("user:" + user.name);
 		List<Ticket> myTickets = db.getTickets(technician);
 
 		if (myTickets.size() == 0) {
@@ -463,12 +475,21 @@ public class App {
 			System.out.println("You don't have any tickets at the moment!");
 		} else {
 
-			System.out.printf("\n%-35s %-10s %-25s %-10s\n", "Creation Date", "Status", "Assigned Technician",
+			System.out.printf("\n%-35s %-35s %-10s %-25s %-10s\n", "Creation Date", "Creation Date", "Status", "Assigned Technician",
 					"Severity");
 
-			for (Ticket ticket : db.getTickets()) {
-				System.out.printf("%-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.status,
+			for (Ticket ticket : myTickets) {
+
+				// If the ticket is still open, print creationDate, status, tech and severity
+				if (ticket.status == Ticket.Status.open) {
+					System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), "", ticket.status,
 						ticket.assignedTechnician.name, ticket.severity);
+
+				// If the ticket is closed, print creationDate, actionDate, status, tech and severity
+				} else {
+					System.out.printf("%-35s -35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+						ticket.assignedTechnician.name, ticket.severity);
+				}
 			}
 		}
 	}
