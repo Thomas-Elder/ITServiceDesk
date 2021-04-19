@@ -340,12 +340,14 @@ public class App {
 		// Get user input for required Ticket variables
 		System.out.println("\nEnter a description of the issue you're having:");
 		description = sc.nextLine();
+		
+		// Choose severity of ticket
 		System.out.println("\nSelect the severity:");
+		System.out.println("0 - Low");
+		System.out.println("1 - Medium");
+		System.out.println("2 - High");
 
-		for (Ticket.Severity s : Ticket.Severity.values()) {
-			System.out.printf("%s\n", s);
-		}
-		severity = Ticket.Severity.valueOf(sc.nextLine());
+		severity = Ticket.Severity.values()[Integer.parseInt(sc.nextLine())];
 
 		// Get user input for the required ITSystem variables
 		System.out.println("\nEnter your operating system:");
