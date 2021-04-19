@@ -35,13 +35,13 @@ public class App {
 	/**
 	 * <h2>Init</h2> Initialise required fields and hardcoded values.
 	 * 
-	 * Initialises the Database, then adds the hardcoded Accounts. Initialises the
-	 * Scanner used for getting input from the user. Initialises the loggedIn field,
-	 * used for tracking if a user is logged in.
+	 * Initialises the Database, then adds the hardcoded Technician and Staff Accounts.
+	 * Creates hardcoded test Tickets and adds them to the Database.
+	 * Initialises the Scanner used for getting input from the user. 
+	 * Initialises the loggedIn field, used for tracking if a user is logged in.
 	 * 
 	 * @param none
 	 * @return none
-	 * @throws ParseException
 	 */
 	public static void init() {
 
@@ -107,7 +107,6 @@ public class App {
 	 * 
 	 * @param none
 	 * @return none
-	 * @throws ParseException
 	 */
 	public static void interactionLoop() {
 		System.out.println();
@@ -162,6 +161,7 @@ public class App {
 					System.out.println("2 - View My Ticket list");
 					System.out.println("3 - Amend severity of a ticket");
 					System.out.println("4 - Amend status of a ticket");
+					System.out.println("5 - View Ticket report");
 					System.out.println("X - Exit");
 
 					// Get input
@@ -180,6 +180,9 @@ public class App {
 					case '4': // Amend status
 						updateTicketStatus();
 						break;
+					case '5':
+						printReport();
+						break;
 					case 'X':
 					case 'x':
 						System.out.println("\nThanks for using the Cinco IT Service Desk!\n");
@@ -195,8 +198,7 @@ public class App {
 					System.out.println();
 					System.out.println("Please select an option:");
 					System.out.println("1 - Create a Ticket");
-					System.out.println("2 - View Ticket list");
-					System.out.println("3 - View Ticket report");
+					System.out.println("2 - View my Ticket list");
 					System.out.println("X - Exit");
 
 					// Get input
@@ -207,10 +209,7 @@ public class App {
 						createTicket();
 						break;
 					case '2':
-						printAllTickets();
-						break;
-					case '3':
-						printReport();
+						printMyTickets((Staff) user);
 						break;
 					case 'X':
 					case 'x':
@@ -309,7 +308,6 @@ public class App {
 
 			if (password.equals(account.password)) {
 				System.out.println("Success! You're logged in.");
-				System.out.println();
 				loggedIn = true;
 				user = account;
 			}
@@ -343,7 +341,6 @@ public class App {
 
 			if (password.equals(account.password)) {
 				System.out.println("Success! You're logged in.");
-				System.out.println();
 				loggedIn = true;
 				user = account;
 			}
@@ -535,7 +532,7 @@ public class App {
 	 * @return none
 	 */
 	public static void printMyTickets(Technician technician) {
-		System.out.println("user:" + user.name);
+
 		List<Ticket> myTickets = db.getTickets(technician);
 
 		if (myTickets.size() == 0) {
@@ -557,7 +554,41 @@ public class App {
 				} else {
 				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
 					ticket.assignedTechnician.name, ticket.severity);
+				}
 			}
+		}
+	}
+
+	/**
+	 * <h2>Print My Tickets</h2> Print all the tickets created by the specified Staff member.
+	 * 
+	 * @param Staff staff
+	 * @return none
+	 */
+	public static void printMyTickets(Staff staff) {
+
+		List<Ticket> myTickets = db.getTickets(staff);
+
+		if (myTickets.size() == 0) {
+
+			System.out.println("You don't have any tickets at the moment!");
+		} else {
+
+			System.out.printf("\n%-20s %-20s %-10s %-25s %-10s\n", "Creation Date", "Action Date", "Status", "Assigned Technician",
+					"Severity");
+
+			for (Ticket ticket : myTickets) {
+
+				// If the ticket is still open, print creationDate, status, tech and severity
+				if (ticket.status == Ticket.Status.open) {
+					System.out.printf("%-20s %-20s %-10s %-25s %-10s\n", ticket.creationDate.toString(), "", ticket.status,
+						ticket.assignedTechnician.name, ticket.severity);
+
+				// If the ticket is closed, print creationDate, actionDate, status, tech and severity
+				} else {
+				System.out.printf("%-20s %-20s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+					ticket.assignedTechnician.name, ticket.severity);
+				}
 			}
 		}
 	}
