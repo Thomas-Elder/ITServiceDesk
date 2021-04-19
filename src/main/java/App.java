@@ -48,17 +48,20 @@ public class App {
 		db.addTechnicianAccount(new Technician("louis.tomlinson@cinco.com", "Louis Tomlinson", "8992 6324", "4567", 2));
 		db.addTechnicianAccount(new Technician("zayn.malik@cinco.com", "Zayn Malik", "8992 6325", "8912", 2));
 
-		// Create hardcoded test Staff Account
-		db.addStaffAccount(new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234"));
+		// Create hardcoded test Staff Accounts
+		Staff jane = new Staff("jane.doe@cinco.com", "Jane Doe", "8992 1234", "1234");
+		Staff jon = new Staff("jon.doe@cinco.com", "Jon Doe", "8992 1234", "1234");
+		db.addStaffAccount(jane);
+		db.addStaffAccount(jon);
 
 		// Create test Ticket for testing
 		ITSystem itSystem = new ITSystem("OS", "program", "version");
-		db.addTicket(new Ticket("Test", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		db.addTicket(new Ticket("Test 1", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		db.addTicket(new Ticket("Test 2", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		db.addTicket(new Ticket("Test 3", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		db.addTicket(new Ticket("Test 4", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		db.addTicket(new Ticket("Test 5", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		db.addTicket(new Ticket(jane, "Test", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		db.addTicket(new Ticket(jane, "Test 1", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		db.addTicket(new Ticket(jane, "Test 2", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		db.addTicket(new Ticket(jon, "Test 3", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		db.addTicket(new Ticket(jon, "Test 4", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		db.addTicket(new Ticket(jon, "Test 5", Ticket.Status.open, Ticket.Severity.high, itSystem));
 
 		// Initialise Scanner for input
 		sc = new Scanner(System.in);
@@ -354,7 +357,7 @@ public class App {
 
 		// Create the ITSystem and Ticket and send to the db
 		itSystem = new ITSystem(os, program, version);
-		ticket = new Ticket(description, status, severity, itSystem);
+		ticket = new Ticket(user, description, status, severity, itSystem);
 		db.addTicket(ticket);
 	}
 
@@ -449,18 +452,18 @@ public class App {
 	 * @return none
 	 */
 	public static void printAllTickets() {
-		System.out.printf("\n%-35s %-35s %-10s %-25s %-10s\n", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
+		System.out.printf("\n%-20s %-35s %-35s %-10s %-25s %-10s\n", "Created by", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
 
 		for (Ticket ticket : db.getTickets()) {
 
 			// If the ticket is still open, print creationDate, status, tech and severity
 			if (ticket.status == Ticket.Status.open) {
-				System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), "", ticket.status,
+				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), "", ticket.status,
 					ticket.assignedTechnician.name, ticket.severity);
 
 			// If the ticket is closed, print creationDate, actionDate, status, tech and severity
 			} else {
-				System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
 					ticket.assignedTechnician.name, ticket.severity);
 			}
 		}
@@ -488,14 +491,14 @@ public class App {
 
 				// If the ticket is still open, print creationDate, status, tech and severity
 				if (ticket.status == Ticket.Status.open) {
-					System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), "", ticket.status,
+					System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), "", ticket.status,
 						ticket.assignedTechnician.name, ticket.severity);
 
 				// If the ticket is closed, print creationDate, actionDate, status, tech and severity
 				} else {
-					System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
-						ticket.assignedTechnician.name, ticket.severity);
-				}
+				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+					ticket.assignedTechnician.name, ticket.severity);
+			}
 			}
 		}
 	}
