@@ -21,6 +21,7 @@ public class Ticket {
 		high, medium, low;
 	}
 
+	public Account creator;
 	public String description;
 	public Date creationDate;
 	public Date actionDate;
@@ -29,7 +30,8 @@ public class Ticket {
 	public Severity severity;
 	public ITSystem itsystem;
 
-	Ticket(String description, Status status, Severity severity, ITSystem itsystem) {
+	Ticket(Account creator, String description, Status status, Severity severity, ITSystem itsystem) {
+		this.creator = creator;
 		this.description = description;
 		this.status = status;
 		this.severity = severity;
