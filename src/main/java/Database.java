@@ -95,4 +95,9 @@ public class Database {
         return this.ticketList.stream().filter(t -> t.assignedTechnician.email.equals(technician.email))
                 .collect(Collectors.toList());
     }
+
+    public List<Ticket> getTickets(Staff staff) {
+        return this.ticketList.stream().filter(t -> t.creator.email.equals(staff.email))
+                .collect(Collectors.toList());
+    }
 }
