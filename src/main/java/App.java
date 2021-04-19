@@ -564,6 +564,10 @@ public class App {
 
 	/**
 	 * <h2>Print Report</h2> Prompts user for dates, then prints a report based on tickets in those dates
+	 * The report displays:
+	 *  - The number of Tickets submitted in the specified period, and how many of those are open, closed or archived.
+	 *  - For all resolved Tickets, it displays who submitted it and when, who attended to it and how long it took to resolve it.
+	 *  - For all open Tickets, it displays who submitted it and when, who is attending to it, and the severity of the ticket.
 	 * 
 	 * @param none
 	 * @return none
