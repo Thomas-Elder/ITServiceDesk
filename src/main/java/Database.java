@@ -83,7 +83,7 @@ public class Database {
     }
 
     public List<Ticket> getTickets(Technician technician) {
-        return this.ticketList.stream().filter(t -> t.assignedTechnician.equals(technician))
+        return this.ticketList.stream().filter(t -> t.assignedTechnician.email.equals(technician.email))
                 .collect(Collectors.toList());
     }
 }
