@@ -186,42 +186,7 @@ public class App {
 
 						break;
 					case '4': // Amend status
-						// Print all tickets with numbers
-						System.out.println("\nPlease select the ticket you wish to amend:");
-						i = 0;
-						for (Ticket ticket : db.ticketList) {
-							System.out.printf("%d - %s - %s\n", i, ticket.description, ticket.status);
-							i++;
-						}
-
-						// Accept input for which ticket
-						selection = Integer.parseInt(sc.nextLine());
-
-						System.out.println("\nPlease select the new status:");
-						// Choose status of ticket
-						System.out.println("0 - Open");
-						System.out.println("1 - Closed");
-						System.out.println("2 - Archived");
-
-						status = sc.nextLine().toCharArray()[0];
-
-						switch (status) {
-						case '0':
-							db.ticketList.get(selection).updateStatus(Ticket.Status.open);
-							System.out.println("Ticket status updated!");
-							break;
-						case '1':
-							db.ticketList.get(selection).updateStatus(Ticket.Status.closed);
-							System.out.println("Ticket status updated!");
-							break;
-						case '2':
-							db.ticketList.get(selection).updateStatus(Ticket.Status.archived);
-							System.out.println("Ticket status updated!");
-							break;
-						default:
-							System.out.println("Invalid Input!");
-						}
-
+						updateTicketStatus();
 						break;
 					case 'X':
 					case 'x':
@@ -433,6 +398,44 @@ public class App {
 		itSystem = new ITSystem(os, program, version);
 		ticket = new Ticket(description, status, severity, itSystem);
 		db.addTicket(ticket);
+	}
+
+	public static void updateTicketStatus(){
+		// Print all tickets with numbers
+		System.out.println("\nPlease select the ticket you wish to amend:");
+		int i = 0;
+		for (Ticket ticket : db.ticketList) {
+			System.out.printf("%d - %s - %s\n", i, ticket.description, ticket.status);
+			i++;
+		}
+
+		// Accept input for which ticket
+		int selection = Integer.parseInt(sc.nextLine());
+
+		System.out.println("\nPlease select the new status:");
+		// Choose status of ticket
+		System.out.println("0 - Open");
+		System.out.println("1 - Closed");
+		System.out.println("2 - Archived");
+
+		char status = sc.nextLine().toCharArray()[0];
+
+		switch (status) {
+		case '0':
+			db.ticketList.get(selection).updateStatus(Ticket.Status.open);
+			System.out.println("Ticket status updated!");
+			break;
+		case '1':
+			db.ticketList.get(selection).updateStatus(Ticket.Status.closed);
+			System.out.println("Ticket status updated!");
+			break;
+		case '2':
+			db.ticketList.get(selection).updateStatus(Ticket.Status.archived);
+			System.out.println("Ticket status updated!");
+			break;
+		default:
+			System.out.println("Invalid Input!");
+		}
 	}
 
 	/**
