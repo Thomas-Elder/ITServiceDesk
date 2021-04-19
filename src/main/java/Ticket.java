@@ -23,6 +23,7 @@ public class Ticket {
 
 	public String description;
 	public Date creationDate;
+	public Date actionDate;
 	public Status status;
 	public Technician assignedTechnician;
 	public Severity severity;
@@ -35,5 +36,13 @@ public class Ticket {
 		this.itsystem = itsystem;
 
 		this.creationDate = new Date();
+	}
+
+	public void updateStatus(Status status) {
+		if (status == Ticket.Status.closed) {
+			this.actionDate = new Date();
+		}
+
+		this.status = status;
 	}
 }
