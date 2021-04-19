@@ -133,14 +133,6 @@ public class App {
 					// Get input
 					option = sc.nextLine().toCharArray()[0];
 
-					List<Ticket> tickets = db.getTickets();
-
-					int selection;
-					char severity;
-					char status;
-
-					int i;
-
 					switch (option) {
 					case '1':
 						printAllTickets();
