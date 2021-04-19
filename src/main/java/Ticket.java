@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * <h1>Ticket</h1>
@@ -23,8 +23,8 @@ public class Ticket {
 
 	public Account creator;
 	public String description;
-	public Date creationDate;
-	public Date actionDate;
+	public LocalDate creationDate;
+	public LocalDate actionDate;
 	public Status status;
 	public Technician assignedTechnician;
 	public Severity severity;
@@ -37,19 +37,19 @@ public class Ticket {
 		this.severity = severity;
 		this.itsystem = itsystem;
 
-		this.creationDate = new Date();
+		this.creationDate = LocalDate.now();
 	}
 
 	public void updateStatus(Status status) {
 
 		// If we're closing the ticket, update the actionDate
 		if (status == Ticket.Status.closed) {
-			this.actionDate = new Date();
+			this.actionDate = LocalDate.now();
 		}
 
 		// If we're going from open to archived, update the actionDate
 		if (status == Ticket.Status.archived && this.status == Ticket.Status.open) {
-			this.actionDate = new Date();
+			this.actionDate = LocalDate.now();
 		}
 
 		this.status = status;

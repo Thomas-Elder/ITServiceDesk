@@ -1,4 +1,5 @@
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,10 +84,10 @@ public class Database {
         return ticketList;
     }
 
-    public List<Ticket> getTickets(Date start, Date end) {
+    public List<Ticket> getTickets(LocalDate start, LocalDate end) {
 
-        return this.ticketList.stream().filter(t -> t.creationDate.after(start))
-                                       .filter(t -> t.creationDate.before(end))
+        return this.ticketList.stream().filter(t -> t.creationDate.isAfter(start))
+                                       .filter(t -> t.creationDate.isBefore(end))
                                        .collect(Collectors.toList());
     }
 

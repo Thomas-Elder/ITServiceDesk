@@ -1,8 +1,11 @@
 
-import java.text.DateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * <h1>Cinco IT Service Desk Application</h1> A simple application for managing
@@ -71,9 +74,10 @@ public class App {
 		testTickets.add(new Ticket(jane, "Test 6", Ticket.Status.open, Ticket.Severity.high, itSystem));
 
 		// Change dates on some tickets so they're older
-		DateFormat format = new SimpleDateFormat("d/MM/yyyy", Locale.ENGLISH);
-		testTickets.get(0).creationDate = format.parse("10/03/2021");
-		testTickets.get(5).creationDate = format.parse("10/03/2021");
+		testTickets.get(0).creationDate = LocalDate.parse("2021-03-10");
+		testTickets.get(5).creationDate = LocalDate.parse("2021-03-10");
+		testTickets.get(3).creationDate = LocalDate.parse("2021-04-12");
+		testTickets.get(6).creationDate = LocalDate.parse("2021-04-14");
 		testTickets.get(3).updateStatus(Ticket.Status.closed);
 		testTickets.get(6).updateStatus(Ticket.Status.archived);
 
@@ -184,6 +188,7 @@ public class App {
 					System.out.println("Please select an option:");
 					System.out.println("1 - Create a Ticket");
 					System.out.println("2 - View Ticket list");
+					System.out.println("3 - View Ticket report");
 					System.out.println("X - Exit");
 
 					// Get input
@@ -195,6 +200,9 @@ public class App {
 						break;
 					case '2':
 						printAllTickets();
+						break;
+					case '3':
+						printReport();
 						break;
 					case 'X':
 					case 'x':
@@ -382,6 +390,12 @@ public class App {
 		db.addTicket(ticket);
 	}
 
+	/**
+	 * <h2>Update Ticket Severity</h2> Prompts the user to update a ticket's severity
+	 * 
+	 * @param none
+	 * @return none
+	 */
 	public static void updateTicketSeverity() {
 		// Print all tickets with numbers
 		System.out.println("\nPlease select the ticket you wish to amend:");
@@ -427,6 +441,12 @@ public class App {
 		}
 	}
 
+	/**
+	 * <h2>Update Ticket Status</h2> Prompts the user to update a ticket's status
+	 * 
+	 * @param none
+	 * @return none
+	 */
 	public static void updateTicketStatus(){
 		// Print all tickets with numbers
 		System.out.println("\nPlease select the ticket you wish to amend:");
@@ -471,33 +491,10 @@ public class App {
 	 * 
 	 * @param none
 	 * @return none
-	 * @throws ParseException
 	 */
-	public static void printAllTickets() throws ParseException {
+	public static void printAllTickets() {
 		
-		// Ask if user wants to restrict by date?
-		System.out.println("Would you like to report on a specified period? (y/n)");
-		char dateBanded = sc.nextLine().toCharArray()[0];
-
-		List<Ticket> ticketList;
-		if (dateBanded == 'Y' || dateBanded == 'y'){
-			// Get start/end date from user
-
-			System.out.println("Please enter start date, in dd/mm/yyyy format");
-			String response = sc.nextLine();
-			Date start = new SimpleDateFormat("d/MM/yyyy").parse(response);
-
-			System.out.println("Please enter end date, in dd/mm/yyyy format");
-			response = sc.nextLine();
-			Date end = new SimpleDateFormat("d/MM/yyyy").parse(response);
-
-			ticketList = db.getTickets(start, end);
-			
-		} else {
-			// Get all tickets
-			ticketList = db.getTickets();
-			System.out.println(ticketList);
-		}
+		List<Ticket> ticketList = db.getTickets();
 
 		// Print header
 		System.out.printf("\n%-20s %-35s %-35s %-10s %-25s %-10s\n", "Created by", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
@@ -548,6 +545,85 @@ public class App {
 				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
 					ticket.assignedTechnician.name, ticket.severity);
 			}
+			}
+		}
+	}
+
+	public static void printReport(){
+
+		List<Ticket> ticketList;
+		LocalDate start, end;
+
+		// Get start/end date from user
+		Boolean invalid = true;
+		while (invalid) {
+			System.out.println("Please enter start date, in dd/mm/yyyy format");
+			String startRes = sc.nextLine();
+
+			System.out.println("Please enter end date, in dd/mm/yyyy format");
+			String endRes = sc.nextLine();
+
+			try {
+				start = LocalDate.parse(startRes);
+				end = LocalDate.parse(endRes);
+				ticketList = db.getTickets(start, end);
+				invalid = false;
+
+				// print report details
+				System.out.println();
+				System.out.printf("Report for period %s-%s", start.toString(), end.toString());
+				System.out.println();
+
+				// showing how many tickets were submitted in that period, and out of those, how many have been resolved and how many are outstanding.
+				System.out.println("Ticket summary:");
+				
+				int countTicketsOpen = 0;
+				int countTicketsClosed = 0;
+				int countTicketsArchived = 0;
+				for (Ticket ticket : ticketList) {
+					if (ticket.status == Ticket.Status.open) { countTicketsOpen++; }
+					if (ticket.status == Ticket.Status.closed) { countTicketsClosed++; }
+					if (ticket.status == Ticket.Status.archived) { countTicketsArchived++; }
+				}
+
+				System.out.printf("Tickets open - %d\n", countTicketsOpen);
+				System.out.printf("Tickets closed - %d\n", countTicketsClosed);
+				System.out.printf("Tickets archived - %d\n", countTicketsArchived);
+				System.out.println();
+
+				//For all resolved tickets, the report must show who submitted it and when, who attended to it and how long it took to resolve it.
+				System.out.println("Resolved tickets summary:");
+
+				List<Ticket> resolvedTickets = ticketList.stream().filter(t -> t.status == Ticket.Status.closed || t.status == Ticket.Status.archived)
+																  .collect(Collectors.toList());
+
+				System.out.printf("%-20s %-20s %-20s %-10s %-25s %-10s\n", "Creator", "Creation Date", "Action Date", "Time Taken", "Assigned Technician", "Severity");
+				for (Ticket ticket : resolvedTickets) {
+					System.out.printf("%-20s %-20s %-20s %-10s %-25s %-10s\n", 
+									ticket.creator.name, 
+									ticket.creationDate.toString(), 
+									ticket.actionDate.toString(), 
+									Duration.between(ticket.creationDate.atTime(0, 0), ticket.actionDate.atTime(0, 0)).toDays(),
+									ticket.assignedTechnician.name, 
+									ticket.severity);
+				}
+
+				//For all outstanding tickets, the report must show who submitted it and when, and the severity of the ticket.
+				System.out.println();
+				System.out.println("Open tickets summary:");
+				List<Ticket> openTickets = ticketList.stream().filter(t -> t.status == Ticket.Status.open)
+																  .collect(Collectors.toList());
+
+				System.out.printf("%-20s %-20s %-25s %-10s\n", "Creator", "Creation Date", "Assigned Technician", "Severity");
+				for (Ticket ticket : openTickets) {
+					System.out.printf("%-20s %-20s %-25s %-10s\n", 
+									ticket.creator.name, 
+									ticket.creationDate.toString(), 
+									ticket.assignedTechnician.name, 
+									ticket.severity);
+				}
+			} catch (Exception e) {
+				System.out.println("Invalid date format.");
 			}
 		}
 	}
