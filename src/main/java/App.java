@@ -549,6 +549,12 @@ public class App {
 		}
 	}
 
+	/**
+	 * <h2>Print Report</h2> Prompts user for dates, then prints a report based on tickets in those dates
+	 * 
+	 * @param none
+	 * @return none
+	 */
 	public static void printReport(){
 
 		List<Ticket> ticketList;
