@@ -207,15 +207,15 @@ public class App {
 
 						switch (status) {
 						case '0':
-							db.ticketList.get(selection).status = Ticket.Status.open;
+							db.ticketList.get(selection).updateStatus(Ticket.Status.open);
 							System.out.println("Ticket status updated!");
 							break;
 						case '1':
-							db.ticketList.get(selection).status = Ticket.Status.closed;
+							db.ticketList.get(selection).updateStatus(Ticket.Status.closed);
 							System.out.println("Ticket status updated!");
 							break;
 						case '2':
-							db.ticketList.get(selection).status = Ticket.Status.archived;
+							db.ticketList.get(selection).updateStatus(Ticket.Status.archived);
 							System.out.println("Ticket status updated!");
 							break;
 						default:
@@ -443,7 +443,7 @@ public class App {
 	 * @return none
 	 */
 	public static void printAllTickets() {
-		System.out.printf("\n%-35s 35s %-10s %-25s %-10s\n", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
+		System.out.printf("\n%-35s %-35s %-10s %-25s %-10s\n", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
 
 		for (Ticket ticket : db.getTickets()) {
 
@@ -454,7 +454,7 @@ public class App {
 
 			// If the ticket is closed, print creationDate, actionDate, status, tech and severity
 			} else {
-				System.out.printf("%-35s -35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+				System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
 					ticket.assignedTechnician.name, ticket.severity);
 			}
 		}
@@ -487,7 +487,7 @@ public class App {
 
 				// If the ticket is closed, print creationDate, actionDate, status, tech and severity
 				} else {
-					System.out.printf("%-35s -35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+					System.out.printf("%-35s %-35s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
 						ticket.assignedTechnician.name, ticket.severity);
 				}
 			}
