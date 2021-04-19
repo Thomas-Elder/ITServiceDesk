@@ -149,41 +149,7 @@ public class App {
 						printMyTickets((Technician) user);
 						break;
 					case '3': // Amend severity
-						// Print all tickets with numbers
-
-						System.out.println("\nPlease select the ticket you wish to amend:");
-						for (i = 0; i < tickets.size(); i++) {
-							System.out.printf("%d - %s\n", i, tickets.get(i).description);
-						}
-
-						// Accept input for which ticket
-						selection = Integer.parseInt(sc.nextLine());
-
-						// Choose severity of ticket
-						System.out.println("\nPlease select the new severity of the ticket:");
-						System.out.println("0 - Low");
-						System.out.println("1 - Medium");
-						System.out.println("2 - High");
-
-						severity = sc.nextLine().toCharArray()[0];
-
-						switch (severity) {
-						case '0':
-							db.ticketList.get(selection).severity = Ticket.Severity.low;
-							System.out.println("Ticket severity updated!");
-							break;
-						case '1':
-							db.ticketList.get(selection).severity = Ticket.Severity.medium;
-							System.out.println("Ticket severity updated!");
-							break;
-						case '2':
-							db.ticketList.get(selection).severity = Ticket.Severity.high;
-							System.out.println("Ticket severity updated!");
-							break;
-						default:
-							System.out.println("Invalid Input!");
-						}
-
+						updateTicketSeverity();
 						break;
 					case '4': // Amend status
 						updateTicketStatus();
@@ -398,6 +364,44 @@ public class App {
 		itSystem = new ITSystem(os, program, version);
 		ticket = new Ticket(description, status, severity, itSystem);
 		db.addTicket(ticket);
+	}
+
+	public static void updateTicketSeverity() {
+		// Print all tickets with numbers
+		System.out.println("\nPlease select the ticket you wish to amend:");
+		int i = 0;
+		for (Ticket ticket : db.ticketList) {
+			System.out.printf("%d - %s - %s\n", i, ticket.description, ticket.status);
+			i++;
+		}
+
+		// Accept input for which ticket
+		int selection = Integer.parseInt(sc.nextLine());
+
+		// Choose severity of ticket
+		System.out.println("\nPlease select the new severity of the ticket:");
+		System.out.println("0 - Low");
+		System.out.println("1 - Medium");
+		System.out.println("2 - High");
+
+		char severity = sc.nextLine().toCharArray()[0];
+
+		switch (severity) {
+		case '0':
+			db.ticketList.get(selection).severity = Ticket.Severity.low;
+			System.out.println("Ticket severity updated!");
+			break;
+		case '1':
+			db.ticketList.get(selection).severity = Ticket.Severity.medium;
+			System.out.println("Ticket severity updated!");
+			break;
+		case '2':
+			db.ticketList.get(selection).severity = Ticket.Severity.high;
+			System.out.println("Ticket severity updated!");
+			break;
+		default:
+			System.out.println("Invalid Input!");
+		}
 	}
 
 	public static void updateTicketStatus(){
