@@ -557,10 +557,10 @@ public class App {
 		// Get start/end date from user
 		Boolean invalid = true;
 		while (invalid) {
-			System.out.println("Please enter start date, in dd/mm/yyyy format");
+			System.out.println("Please enter start date, in yyyy-mm-dd format");
 			String startRes = sc.nextLine();
 
-			System.out.println("Please enter end date, in dd/mm/yyyy format");
+			System.out.println("Please enter end date, in yyyy-mm-dd format");
 			String endRes = sc.nextLine();
 
 			try {
