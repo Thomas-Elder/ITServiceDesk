@@ -1,4 +1,7 @@
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -35,8 +38,9 @@ public class App {
 	 * 
 	 * @param none
 	 * @return none
+	 * @throws ParseException
 	 */
-	public static void init() {
+	public static void init() throws ParseException {
 
 		// Initialise Database
 		db = new Database();
@@ -56,12 +60,26 @@ public class App {
 
 		// Create test Ticket for testing
 		ITSystem itSystem = new ITSystem("OS", "program", "version");
-		db.addTicket(new Ticket(jane, "Test", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		db.addTicket(new Ticket(jane, "Test 1", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		db.addTicket(new Ticket(jane, "Test 2", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		db.addTicket(new Ticket(jon, "Test 3", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		db.addTicket(new Ticket(jon, "Test 4", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		db.addTicket(new Ticket(jon, "Test 5", Ticket.Status.open, Ticket.Severity.high, itSystem));
+
+		List<Ticket> testTickets = new ArrayList<Ticket>();
+		testTickets.add(new Ticket(jane, "Test 0", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "Test 1", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "Test 2", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "Test 3", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jon, "Test 4", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jon, "Test 5", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "Test 6", Ticket.Status.open, Ticket.Severity.high, itSystem));
+
+		// Change dates on some tickets so they're older
+		DateFormat format = new SimpleDateFormat("d/MM/yyyy", Locale.ENGLISH);
+		testTickets.get(0).creationDate = format.parse("10/03/2021");
+		testTickets.get(5).creationDate = format.parse("10/03/2021");
+		testTickets.get(3).updateStatus(Ticket.Status.closed);
+		testTickets.get(6).updateStatus(Ticket.Status.archived);
+
+		for (Ticket ticket : testTickets){
+			db.addTicket(ticket);
+		}
 
 		// Initialise Scanner for input
 		sc = new Scanner(System.in);
@@ -78,8 +96,9 @@ public class App {
 	 * 
 	 * @param none
 	 * @return none
+	 * @throws ParseException
 	 */
-	public static void interactionLoop() {
+	public static void interactionLoop() throws ParseException {
 		System.out.println("Welcome to Cinco IT Service Desk!");
 
 		char option = '0';
@@ -452,11 +471,39 @@ public class App {
 	 * 
 	 * @param none
 	 * @return none
+	 * @throws ParseException
 	 */
-	public static void printAllTickets() {
+	public static void printAllTickets() throws ParseException {
+		
+		// Ask if user wants to restrict by date?
+		System.out.println("Would you like to report on a specified period? (y/n)");
+		char dateBanded = sc.nextLine().toCharArray()[0];
+
+		List<Ticket> ticketList;
+		if (dateBanded == 'Y' || dateBanded == 'y'){
+			// Get start/end date from user
+
+			System.out.println("Please enter start date, in dd/mm/yyyy format");
+			String response = sc.nextLine();
+			Date start = new SimpleDateFormat("d/MM/yyyy").parse(response);
+
+			System.out.println("Please enter end date, in dd/mm/yyyy format");
+			response = sc.nextLine();
+			Date end = new SimpleDateFormat("d/MM/yyyy").parse(response);
+
+			ticketList = db.getTickets(start, end);
+			
+		} else {
+			// Get all tickets
+			ticketList = db.getTickets();
+			System.out.println(ticketList);
+		}
+
+		// Print header
 		System.out.printf("\n%-20s %-35s %-35s %-10s %-25s %-10s\n", "Created by", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
 
-		for (Ticket ticket : db.getTickets()) {
+		// Loop through tickets to print
+		for (Ticket ticket : ticketList) {
 
 			// If the ticket is still open, print creationDate, status, tech and severity
 			if (ticket.status == Ticket.Status.open) {
