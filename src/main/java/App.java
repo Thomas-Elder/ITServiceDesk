@@ -24,7 +24,7 @@ public class App {
 	 * @param not used
 	 * @return none
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		init();
 		interactionLoop();
@@ -109,7 +109,7 @@ public class App {
 	 * @return none
 	 * @throws ParseException
 	 */
-	public static void interactionLoop() throws ParseException {
+	public static void interactionLoop() {
 		System.out.println("Welcome to Cinco IT Service Desk!");
 
 		char option = '0';
