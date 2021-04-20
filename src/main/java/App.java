@@ -71,6 +71,25 @@ public class App {
 		testTickets.add(new Ticket(jon, "Test 4", Ticket.Status.open, Ticket.Severity.medium, itSystem));
 		testTickets.add(new Ticket(jon, "Test 5", Ticket.Status.open, Ticket.Severity.high, itSystem));
 		testTickets.add(new Ticket(jane, "Test 6", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "Test 7", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "Test 8", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "Test 9", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "Test 10", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "Test 11", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "Test 12", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "Test 13", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "Test 14", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "Test 15", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "Test 16", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jon, "Test 17", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jon, "Test 18", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "Test 19", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "Test 20", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "Test 21", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "Test 22", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "Test 23", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "Test 24", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "Test 25", Ticket.Status.open, Ticket.Severity.low, itSystem));
 
 		// Change dates on some tickets so they're older
 		try {
@@ -522,6 +541,12 @@ public class App {
 					ticket.assignedTechnician.name, ticket.severity);
 			}
 		}
+
+		System.out.printf("\n%-20s - %-20s", "Technician", "# of Tickets");
+		for (Technician t : db.getAllTechnicians()) {
+			System.out.printf("\n%-20s - %-20d", t.name, t.activeTickets.size());
+		}
+		System.out.println();
 	}
 
 	/**
