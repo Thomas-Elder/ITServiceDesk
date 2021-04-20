@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Database {
@@ -37,40 +38,62 @@ public class Database {
 
     public void addTicket(Ticket newTicket) {
 
+        Random random = new Random();
+
         if (newTicket.severity == Ticket.Severity.high) {
 
-            List<Technician> getl2techs = technicianAccountsHashMap.values().stream().filter(t -> t.level == 2)
+            // Get a list of level 2 technicians
+            List<Technician> level2Technicians = technicianAccountsHashMap.values().stream().filter(t -> t.level == 2)
                     .collect(Collectors.toList());
 
             int min = 100;
-            int j = 0;
 
-            for (int i = 0; i < getl2techs.size(); i++) {
-                if (getl2techs.get(i).activeTickets.size() < min) {
-                    min = getl2techs.get(i).activeTickets.size();
-                    j = i;
+            // Get the minimum number of tickets anyone has
+            for (int i = 0; i < level2Technicians.size(); i++) {
+                if (level2Technicians.get(i).activeTickets.size() < min) {
+                    min = level2Technicians.get(i).activeTickets.size();
                 }
             }
 
-            newTicket.assignedTechnician = getl2techs.get(j);
-            getl2techs.get(j).addTicket(newTicket);
+            // Get a list of all techs with the min # of tickets, and randomly assign
+            List<Technician> minTicketTechList = new ArrayList<Technician>();
+            for (Technician t : level2Technicians) {
+                if (t.activeTickets.size() == min) { minTicketTechList.add(t); }
+            }
+
+            // Get a random index...
+            int randomIndex = random.nextInt(minTicketTechList.size());
+
+            // Assign the ticket to the tech at that index
+            newTicket.assignedTechnician = minTicketTechList.get(randomIndex);
+            minTicketTechList.get(randomIndex).addTicket(newTicket);
 
         } else {
-            List<Technician> getl1techs = technicianAccountsHashMap.values().stream().filter(t -> t.level == 1)
+            // Get a list of level 2 technicians
+            List<Technician> level1Technicians = technicianAccountsHashMap.values().stream().filter(t -> t.level == 1)
                     .collect(Collectors.toList());
 
             int min = 100;
-            int k = 0;
 
-            for (int i = 0; i < getl1techs.size(); i++) {
-                if (getl1techs.get(i).activeTickets.size() < min) {
-                    min = getl1techs.get(i).activeTickets.size();
-                    k = i;
+            // Get the minimum number of tickets anyone has
+            for (int i = 0; i < level1Technicians.size(); i++) {
+                if (level1Technicians.get(i).activeTickets.size() < min) {
+                    min = level1Technicians.get(i).activeTickets.size();
                 }
             }
 
-            newTicket.assignedTechnician = getl1techs.get(k);
-            getl1techs.get(k).addTicket(newTicket);
+            // Get a list of all techs with the min # of tickets, and randomly assign
+            List<Technician> minTicketTechList = new ArrayList<Technician>();
+            for (Technician t : level1Technicians) {
+                if (t.activeTickets.size() == min) { minTicketTechList.add(t); }
+            }
+
+            // Get a random index...
+            int randomIndex = random.nextInt(minTicketTechList.size());
+
+            // Assign the ticket to the tech at that index
+            newTicket.assignedTechnician = minTicketTechList.get(randomIndex);
+            minTicketTechList.get(randomIndex).addTicket(newTicket);
         }
 
         ticketList.add(newTicket);
