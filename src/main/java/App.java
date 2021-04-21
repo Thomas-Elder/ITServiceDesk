@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -16,6 +19,9 @@ public class App {
 	static Database db;
 	static Boolean loggedIn;
 	static Account user;
+
+	// static ScheduledExecutorService someScheduler =
+	// Executors.newScheduledThreadPool(1);
 
 	/**
 	 * <h2>Main</h2> This is the entry point for the application.
@@ -64,32 +70,32 @@ public class App {
 		ITSystem itSystem = new ITSystem("OS", "program", "version");
 
 		List<Ticket> testTickets = new ArrayList<Ticket>();
-		testTickets.add(new Ticket(jane, "Test 0", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		testTickets.add(new Ticket(jane, "Test 1", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jane, "Test 2", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jon, "Test 3", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		testTickets.add(new Ticket(jon, "Test 4", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jon, "Test 5", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jane, "Test 6", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jane, "Test 7", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jane, "Test 8", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jon, "Test 9", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		testTickets.add(new Ticket(jane, "Test 10", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jane, "Test 11", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jon, "Test 12", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		testTickets.add(new Ticket(jane, "Test 13", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		testTickets.add(new Ticket(jane, "Test 14", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jane, "Test 15", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jon, "Test 16", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		testTickets.add(new Ticket(jon, "Test 17", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jon, "Test 18", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jane, "Test 19", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jane, "Test 20", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jane, "Test 21", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jon, "Test 22", Ticket.Status.open, Ticket.Severity.low, itSystem));
-		testTickets.add(new Ticket(jane, "Test 23", Ticket.Status.open, Ticket.Severity.medium, itSystem));
-		testTickets.add(new Ticket(jane, "Test 24", Ticket.Status.open, Ticket.Severity.high, itSystem));
-		testTickets.add(new Ticket(jon, "Test 25", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "cracked screen", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "no internet", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "audio too low", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "slow computer", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jon, "loud noise", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jon, "virus", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "wifi", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "low space", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "faulty ram", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "mouse not clicking", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "pc not turning on", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "email not syncing", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "webcam replacement", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "freezing", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "blue screen", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "clicking sound", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "blank screen", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jon, "broken usb port", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jon, "no dial tone on phone", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "1d music", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jane, "pc upgrade", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "hacked account", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "sleepy technician", Ticket.Status.open, Ticket.Severity.low, itSystem));
+		testTickets.add(new Ticket(jane, "email reset", Ticket.Status.open, Ticket.Severity.medium, itSystem));
+		testTickets.add(new Ticket(jane, "forgot password", Ticket.Status.open, Ticket.Severity.high, itSystem));
+		testTickets.add(new Ticket(jon, "vpn not working", Ticket.Status.open, Ticket.Severity.low, itSystem));
 
 		// Change dates on some tickets so they're older
 		try {
@@ -252,6 +258,7 @@ public class App {
 	 */
 	public static void end() {
 		sc.close();
+		someScheduler.shutdownNow();
 	}
 
 	/**
@@ -483,6 +490,7 @@ public class App {
 	 * @return none
 	 */
 	public static void updateTicketStatus() {
+
 		// Print all tickets with numbers
 		System.out.println("\nPlease select the ticket you wish to amend:");
 		int i = 0;
@@ -506,6 +514,7 @@ public class App {
 		System.out.println("0 - Open");
 		System.out.println("1 - Closed");
 		System.out.println("2 - Archived");
+		System.out.println("3 - Resolved");
 
 		char status = sc.nextLine().toCharArray()[0];
 
@@ -521,6 +530,13 @@ public class App {
 		case '2':
 			db.ticketList.get(selection).updateStatus(Ticket.Status.archived);
 			System.out.println("Ticket status updated!");
+			break;
+		case '3':
+			db.ticketList.get(selection).markResolved();
+			System.out.println("Ticket marked as resolved!");
+			// long timeDelay = 1;
+			// Runnable autoArchive = new AutoArchive(selection);
+			// someScheduler.schedule(autoArchive, timeDelay, TimeUnit.SECONDS);
 			break;
 		default:
 			System.out.println("Invalid Input!");

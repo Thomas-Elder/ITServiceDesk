@@ -29,6 +29,7 @@ public class Ticket {
 	public Technician assignedTechnician;
 	public Severity severity;
 	public ITSystem itsystem;
+	public Boolean resolved;
 
 	Ticket(Account creator, String description, Status status, Severity severity, ITSystem itsystem) {
 		this.creator = creator;
@@ -36,8 +37,12 @@ public class Ticket {
 		this.status = status;
 		this.severity = severity;
 		this.itsystem = itsystem;
-
+		this.resolved = false;
 		this.creationDate = LocalDate.now();
+	}
+
+	public void markResolved() {
+		this.resolved = true;
 	}
 
 	public void updateStatus(Status status) {
