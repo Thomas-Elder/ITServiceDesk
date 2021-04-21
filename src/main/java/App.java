@@ -34,10 +34,10 @@ public class App {
 	/**
 	 * <h2>Init</h2> Initialise required fields and hardcoded values.
 	 * 
-	 * Initialises the Database, then adds the hardcoded Technician and Staff Accounts.
-	 * Creates hardcoded test Tickets and adds them to the Database.
-	 * Initialises the Scanner used for getting input from the user. 
-	 * Initialises the loggedIn field, used for tracking if a user is logged in.
+	 * Initialises the Database, then adds the hardcoded Technician and Staff
+	 * Accounts. Creates hardcoded test Tickets and adds them to the Database.
+	 * Initialises the Scanner used for getting input from the user. Initialises the
+	 * loggedIn field, used for tracking if a user is logged in.
 	 * 
 	 * @param none
 	 * @return none
@@ -106,7 +106,7 @@ public class App {
 		testTickets.get(6).updateStatus(Ticket.Status.archived);
 
 		// Add all tickets to the db
-		for (Ticket ticket : testTickets){
+		for (Ticket ticket : testTickets) {
 			db.addTicket(ticket);
 		}
 
@@ -166,7 +166,7 @@ public class App {
 					System.out.println("Please select a valid option.");
 				}
 
-			// If the user is loggedIn, create/view Tickets.
+				// If the user is loggedIn, create/view Tickets.
 			} else {
 
 				// If the user is Technician...
@@ -395,7 +395,7 @@ public class App {
 		// Get user input for required Ticket variables
 		System.out.println("\nEnter a description of the issue you're having:");
 		description = sc.nextLine();
-		
+
 		// Choose severity of ticket
 		System.out.println("\nSelect the severity:");
 		System.out.println("0 - Low");
@@ -419,7 +419,8 @@ public class App {
 	}
 
 	/**
-	 * <h2>Update Ticket Severity</h2> Prompts the user to update a ticket's severity
+	 * <h2>Update Ticket Severity</h2> Prompts the user to update a ticket's
+	 * severity
 	 * 
 	 * @param none
 	 * @return none
@@ -432,9 +433,15 @@ public class App {
 			System.out.printf("%d - %s - %s\n", i, ticket.description, ticket.severity);
 			i++;
 		}
+		System.out.println("\nOr type X to exit");
 
+		String rawSelection = sc.nextLine().toString();
+
+		if (rawSelection.equals("X") | rawSelection.equals("x")) {
+			return;
+		}
 		// Accept input for which ticket
-		int selection = Integer.parseInt(sc.nextLine());
+		int selection = Integer.parseInt(rawSelection);
 
 		// Get ticket, and pop from db
 		Ticket ticket = db.ticketList.get(selection);
@@ -475,7 +482,7 @@ public class App {
 	 * @param none
 	 * @return none
 	 */
-	public static void updateTicketStatus(){
+	public static void updateTicketStatus() {
 		// Print all tickets with numbers
 		System.out.println("\nPlease select the ticket you wish to amend:");
 		int i = 0;
@@ -484,8 +491,15 @@ public class App {
 			i++;
 		}
 
+		System.out.println("\nOr type X to exit");
+
+		String rawSelection = sc.nextLine().toString();
+
+		if (rawSelection.equals("X") | rawSelection.equals("x")) {
+			return;
+		}
 		// Accept input for which ticket
-		int selection = Integer.parseInt(sc.nextLine());
+		int selection = Integer.parseInt(rawSelection);
 
 		System.out.println("\nPlease select the new status:");
 		// Choose status of ticket
@@ -521,24 +535,28 @@ public class App {
 	 * @return none
 	 */
 	public static void printAllTickets() {
-		
+
 		List<Ticket> ticketList = db.getTickets();
 
 		// Print header
-		System.out.printf("\n%-20s %-35s %-35s %-10s %-25s %-10s\n", "Created by", "Creation Date", "Action Date", "Status", "Assigned Technician", "Severity");
+		System.out.printf("\n%-20s %-35s %-35s %-10s %-25s %-10s\n", "Created by", "Creation Date", "Action Date",
+				"Status", "Assigned Technician", "Severity");
 
 		// Loop through tickets to print
 		for (Ticket ticket : ticketList) {
 
 			// If the ticket is still open, print creationDate, status, tech and severity
 			if (ticket.status == Ticket.Status.open) {
-				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), "", ticket.status,
-					ticket.assignedTechnician.name, ticket.severity);
+				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
+						ticket.creationDate.toString(), "", ticket.status, ticket.assignedTechnician.name,
+						ticket.severity);
 
-			// If the ticket is closed, print creationDate, actionDate, status, tech and severity
+				// If the ticket is closed, print creationDate, actionDate, status, tech and
+				// severity
 			} else {
-				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
-					ticket.assignedTechnician.name, ticket.severity);
+				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
+						ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+						ticket.assignedTechnician.name, ticket.severity);
 			}
 		}
 
@@ -564,27 +582,31 @@ public class App {
 			System.out.println("You don't have any tickets at the moment!");
 		} else {
 
-			System.out.printf("\n%-35s %-35s %-10s %-25s %-10s\n", "Creation Date", "Creation Date", "Status", "Assigned Technician",
-					"Severity");
+			System.out.printf("\n%-35s %-35s %-10s %-25s %-10s\n", "Creation Date", "Creation Date", "Status",
+					"Assigned Technician", "Severity");
 
 			for (Ticket ticket : myTickets) {
 
 				// If the ticket is still open, print creationDate, status, tech and severity
 				if (ticket.status == Ticket.Status.open) {
-					System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), "", ticket.status,
-						ticket.assignedTechnician.name, ticket.severity);
+					System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
+							ticket.creationDate.toString(), "", ticket.status, ticket.assignedTechnician.name,
+							ticket.severity);
 
-				// If the ticket is closed, print creationDate, actionDate, status, tech and severity
+					// If the ticket is closed, print creationDate, actionDate, status, tech and
+					// severity
 				} else {
-				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
-					ticket.assignedTechnician.name, ticket.severity);
+					System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
+							ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+							ticket.assignedTechnician.name, ticket.severity);
 				}
 			}
 		}
 	}
 
 	/**
-	 * <h2>Print My Tickets</h2> Print all the tickets created by the specified Staff member.
+	 * <h2>Print My Tickets</h2> Print all the tickets created by the specified
+	 * Staff member.
 	 * 
 	 * @param Staff staff
 	 * @return none
@@ -598,36 +620,40 @@ public class App {
 			System.out.println("You don't have any tickets at the moment!");
 		} else {
 
-			System.out.printf("\n%-20s %-20s %-10s %-25s %-10s\n", "Creation Date", "Action Date", "Status", "Assigned Technician",
-					"Severity");
+			System.out.printf("\n%-20s %-20s %-10s %-25s %-10s\n", "Creation Date", "Action Date", "Status",
+					"Assigned Technician", "Severity");
 
 			for (Ticket ticket : myTickets) {
 
 				// If the ticket is still open, print creationDate, status, tech and severity
 				if (ticket.status == Ticket.Status.open) {
-					System.out.printf("%-20s %-20s %-10s %-25s %-10s\n", ticket.creationDate.toString(), "", ticket.status,
-						ticket.assignedTechnician.name, ticket.severity);
+					System.out.printf("%-20s %-20s %-10s %-25s %-10s\n", ticket.creationDate.toString(), "",
+							ticket.status, ticket.assignedTechnician.name, ticket.severity);
 
-				// If the ticket is closed, print creationDate, actionDate, status, tech and severity
+					// If the ticket is closed, print creationDate, actionDate, status, tech and
+					// severity
 				} else {
-				System.out.printf("%-20s %-20s %-10s %-25s %-10s\n", ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
-					ticket.assignedTechnician.name, ticket.severity);
+					System.out.printf("%-20s %-20s %-10s %-25s %-10s\n", ticket.creationDate.toString(),
+							ticket.actionDate.toString(), ticket.status, ticket.assignedTechnician.name,
+							ticket.severity);
 				}
 			}
 		}
 	}
 
 	/**
-	 * <h2>Print Report</h2> Prompts user for dates, then prints a report based on tickets in those dates
-	 * The report displays:
-	 *  - The number of Tickets submitted in the specified period, and how many of those are open, closed or archived.
-	 *  - For all resolved Tickets, it displays who submitted it and when, who attended to it and how long it took to resolve it.
-	 *  - For all open Tickets, it displays who submitted it and when, who is attending to it, and the severity of the ticket.
+	 * <h2>Print Report</h2> Prompts user for dates, then prints a report based on
+	 * tickets in those dates The report displays: - The number of Tickets submitted
+	 * in the specified period, and how many of those are open, closed or archived.
+	 * - For all resolved Tickets, it displays who submitted it and when, who
+	 * attended to it and how long it took to resolve it. - For all open Tickets, it
+	 * displays who submitted it and when, who is attending to it, and the severity
+	 * of the ticket.
 	 * 
 	 * @param none
 	 * @return none
 	 */
-	public static void printReport(){
+	public static void printReport() {
 
 		List<Ticket> ticketList;
 		LocalDate start, end;
@@ -652,16 +678,23 @@ public class App {
 				System.out.printf("Report for period %s-%s", start.toString(), end.toString());
 				System.out.println();
 
-				// showing how many tickets were submitted in that period, and out of those, how many have been resolved and how many are outstanding.
+				// showing how many tickets were submitted in that period, and out of those, how
+				// many have been resolved and how many are outstanding.
 				System.out.println("Ticket summary:");
-				
+
 				int countTicketsOpen = 0;
 				int countTicketsClosed = 0;
 				int countTicketsArchived = 0;
 				for (Ticket ticket : ticketList) {
-					if (ticket.status == Ticket.Status.open) { countTicketsOpen++; }
-					if (ticket.status == Ticket.Status.closed) { countTicketsClosed++; }
-					if (ticket.status == Ticket.Status.archived) { countTicketsArchived++; }
+					if (ticket.status == Ticket.Status.open) {
+						countTicketsOpen++;
+					}
+					if (ticket.status == Ticket.Status.closed) {
+						countTicketsClosed++;
+					}
+					if (ticket.status == Ticket.Status.archived) {
+						countTicketsArchived++;
+					}
 				}
 
 				System.out.printf("Tickets open - %d\n", countTicketsOpen);
@@ -669,36 +702,35 @@ public class App {
 				System.out.printf("Tickets archived - %d\n", countTicketsArchived);
 				System.out.println();
 
-				//For all resolved tickets, the report must show who submitted it and when, who attended to it and how long it took to resolve it.
+				// For all resolved tickets, the report must show who submitted it and when, who
+				// attended to it and how long it took to resolve it.
 				System.out.println("Resolved tickets summary:");
 
-				List<Ticket> resolvedTickets = ticketList.stream().filter(t -> t.status == Ticket.Status.closed || t.status == Ticket.Status.archived)
-																  .collect(Collectors.toList());
+				List<Ticket> resolvedTickets = ticketList.stream()
+						.filter(t -> t.status == Ticket.Status.closed || t.status == Ticket.Status.archived)
+						.collect(Collectors.toList());
 
-				System.out.printf("%-20s %-20s %-20s %-10s %-25s %-10s\n", "Creator", "Creation Date", "Action Date", "Time Taken", "Assigned Technician", "Severity");
+				System.out.printf("%-20s %-20s %-20s %-10s %-25s %-10s\n", "Creator", "Creation Date", "Action Date",
+						"Time Taken", "Assigned Technician", "Severity");
 				for (Ticket ticket : resolvedTickets) {
-					System.out.printf("%-20s %-20s %-20s %-10s %-25s %-10s\n", 
-									ticket.creator.name, 
-									ticket.creationDate.toString(), 
-									ticket.actionDate.toString(), 
-									Duration.between(ticket.creationDate.atTime(0, 0), ticket.actionDate.atTime(0, 0)).toDays(),
-									ticket.assignedTechnician.name, 
-									ticket.severity);
+					System.out.printf("%-20s %-20s %-20s %-10s %-25s %-10s\n", ticket.creator.name,
+							ticket.creationDate.toString(), ticket.actionDate.toString(),
+							Duration.between(ticket.creationDate.atTime(0, 0), ticket.actionDate.atTime(0, 0)).toDays(),
+							ticket.assignedTechnician.name, ticket.severity);
 				}
 
-				//For all outstanding tickets, the report must show who submitted it and when, and the severity of the ticket.
+				// For all outstanding tickets, the report must show who submitted it and when,
+				// and the severity of the ticket.
 				System.out.println();
 				System.out.println("Open tickets summary:");
 				List<Ticket> openTickets = ticketList.stream().filter(t -> t.status == Ticket.Status.open)
-																  .collect(Collectors.toList());
+						.collect(Collectors.toList());
 
-				System.out.printf("%-20s %-20s %-25s %-10s\n", "Creator", "Creation Date", "Assigned Technician", "Severity");
+				System.out.printf("%-20s %-20s %-25s %-10s\n", "Creator", "Creation Date", "Assigned Technician",
+						"Severity");
 				for (Ticket ticket : openTickets) {
-					System.out.printf("%-20s %-20s %-25s %-10s\n", 
-									ticket.creator.name, 
-									ticket.creationDate.toString(), 
-									ticket.assignedTechnician.name, 
-									ticket.severity);
+					System.out.printf("%-20s %-20s %-25s %-10s\n", ticket.creator.name, ticket.creationDate.toString(),
+							ticket.assignedTechnician.name, ticket.severity);
 				}
 			} catch (Exception e) {
 				System.out.println("Invalid date format.");
