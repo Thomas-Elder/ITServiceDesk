@@ -13,4 +13,11 @@ First make sure the location you've saved the ITServiceDesk folder is local on t
     java -cp .\target\. App
 5 - Then follow the prompts in the application to create accounts, log in, and manage tickets.
 
+Note that the Technician's Accounts have been hard coded into the system, their log in details are as follows:
+Harry Style: email- harry.style@cinco.com password- 1234
+Niall Horan: email- niall.horan@cinco.com password- 5678
+Liam Payne: email- liam.payne@cinco.com password- 9123
+Louis Tomlinson: email- louis.tomlinson@cinco.com password- 4567
+Zayn Malik: email- zayn.malik@cinco.com password- 8912
+
 Enjoy.
