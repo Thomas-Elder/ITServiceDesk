@@ -556,7 +556,7 @@ public class App {
 		List<Ticket> ticketList = db.getTickets();
 
 		// Print header
-		System.out.printf("\n%-20s %-35s %-35s %-10s %-25s %-10s\n", "Created by", "Creation Date", "Action Date",
+		System.out.printf("\n%-15s %-15s %-30s %-15s %-10s %-20s %-10s\n", "Created by", "Creation Date", "Description", "Action Date",
 				"Status", "Assigned Technician", "Severity");
 
 		// Loop through tickets to print
@@ -564,15 +564,15 @@ public class App {
 
 			// If the ticket is still open, print creationDate, status, tech and severity
 			if (ticket.status == Ticket.Status.open) {
-				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
-						ticket.creationDate.toString(), "", ticket.status, ticket.assignedTechnician.name,
+				System.out.printf("%-15s %-15s %-30s %-15s %-10s %-20s %-10s\n", ticket.creator.name,
+						ticket.creationDate.toString(), ticket.description, "", ticket.status, ticket.assignedTechnician.name,
 						ticket.severity);
 
 				// If the ticket is closed, print creationDate, actionDate, status, tech and
 				// severity
 			} else {
-				System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
-						ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+				System.out.printf("%-15s %-15s %-30s %-15s %-10s %-20s %-10s\n", ticket.creator.name,
+						ticket.creationDate.toString(), ticket.description, ticket.actionDate.toString(), ticket.status,
 						ticket.assignedTechnician.name, ticket.severity);
 			}
 		}
@@ -599,22 +599,22 @@ public class App {
 			System.out.println("You don't have any tickets at the moment!");
 		} else {
 
-			System.out.printf("\n%-35s %-35s %-10s %-25s %-10s\n", "Creation Date", "Creation Date", "Status",
-					"Assigned Technician", "Severity");
+			System.out.printf("%-15s %-15s %-30s %-15s %-10s\n", "Created By", "Creation Date", "Description", "Action Date", "Status",
+					"Severity");
 
 			for (Ticket ticket : myTickets) {
 
 				// If the ticket is still open, print creationDate, status, tech and severity
 				if (ticket.status == Ticket.Status.open) {
-					System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
-							ticket.creationDate.toString(), "", ticket.status, ticket.assignedTechnician.name,
+					System.out.printf("%-15s %-15s %-30s %-15s %-10s\n", ticket.creator.name,
+							ticket.creationDate.toString(), ticket.description, "", ticket.status, ticket.assignedTechnician.name,
 							ticket.severity);
 
 					// If the ticket is closed, print creationDate, actionDate, status, tech and
 					// severity
 				} else {
-					System.out.printf("%-20s %-35s %-35s %-10s %-25s %-10s\n", ticket.creator.name,
-							ticket.creationDate.toString(), ticket.actionDate.toString(), ticket.status,
+					System.out.printf("%-15s %-15s %-30s %-15s %-10s\n", ticket.creator.name,
+							ticket.creationDate.toString(), ticket.description, ticket.actionDate.toString(), ticket.status,
 							ticket.assignedTechnician.name, ticket.severity);
 				}
 			}
