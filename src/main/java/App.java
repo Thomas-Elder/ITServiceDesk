@@ -20,8 +20,7 @@ public class App {
 	static Boolean loggedIn;
 	static Account user;
 
-	// static ScheduledExecutorService someScheduler =
-	// Executors.newScheduledThreadPool(1);
+	private static final ScheduledExecutorService someScheduler = Executors.newScheduledThreadPool(1);
 
 	/**
 	 * <h2>Main</h2> This is the entry point for the application.
@@ -534,9 +533,11 @@ public class App {
 		case '3':
 			db.ticketList.get(selection).markResolved();
 			System.out.println("Ticket marked as resolved!");
-			// long timeDelay = 1;
-			// Runnable autoArchive = new AutoArchive(selection);
-			// someScheduler.schedule(autoArchive, timeDelay, TimeUnit.SECONDS);
+
+			// Ticket auto archival
+			long timeDelay = 24;
+			Runnable autoArchive = new AutoArchive(selection, db);
+			someScheduler.schedule(autoArchive, timeDelay, TimeUnit.HOURS);
 			break;
 		default:
 			System.out.println("Invalid Input!");
